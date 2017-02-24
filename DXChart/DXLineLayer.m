@@ -7,6 +7,16 @@
 //
 
 #import "DXLineLayer.h"
+#import "DXkLineModelConfig.h"
+
+@interface DXLineLayer ()
+
+@property (nonatomic, strong) UIBezierPath *strokePath;
+@property (nonatomic, assign) DXLineType lineType;
+@property (nonatomic, weak  ) DXkLineModelConfig *config;
+
+@end
+
 
 @implementation DXLineLayer
 
@@ -20,6 +30,39 @@
     layer.strokeColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5].CGColor;
     layer.fillColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0].CGColor;
     return layer;
+}
+
++ (instancetype)layerWithType:(DXLineType)lineType{
+    DXkLineModelConfig *config = [DXkLineModelConfig sharedInstance];
+    DXLineLayer *layer = [DXLineLayer layer];
+    layer.lineWidth = config.MALineWidth;
+    UIColor *bgColor = [config getBgColorWithLineType:lineType];
+    layer.fillColor = [UIColor clearColor].CGColor;
+    layer.strokeColor = bgColor.CGColor;
+    layer.strokePath = [UIBezierPath bezierPath];
+    layer.config = config;
+    layer.lineType = lineType;
+    return layer;
+}
+
+- (void)setLayerWithModel:(DXkLineModel *)model index:(NSInteger)i{
+    
+    CGFloat x = i * (_config.kLineWidth + _config.layerToLayerGap)+ _config.MALineWidth/2.;
+    CGFloat totalHeight;
+    CGFloat total = (_config.highest - _config.lowest);
+    totalHeight = _config.painterTopHeight * (_config.highest - [model getMADataWithType:_lineType])/total;
+    if (!i) {
+       [_strokePath moveToPoint:CGPointMake(x, totalHeight)]; 
+    }
+    else{
+       [_strokePath addLineToPoint:CGPointMake(x, totalHeight)];
+    }
+    
+}
+
+
+- (void)finishDrawPath{
+    self.path = _strokePath.CGPath;
 }
 
 @end

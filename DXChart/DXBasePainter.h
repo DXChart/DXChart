@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DXLayers.h"
+#import "DXkLineModelConfig.h"
+#import "DXkLineModel.h"
 
 @interface DXBasePainter : UIView
 
 
+- (void)clearContent;
 
-//- (void)reload;
+- (void)reloadWithModels:(NSArray<DXkLineModel *> *)models;
 
 @end

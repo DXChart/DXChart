@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 @import UIKit;
+#import "DXkLineModel.h"
 
 @interface DXkLineModelConfig : NSObject
 
@@ -22,10 +23,17 @@
 @property (nonatomic, assign) CGFloat scale; // 目前的缩放比例
 @property (nonatomic, assign) CGFloat kLineWidth; // k线宽
 @property (nonatomic, assign) CGFloat topMargin; // 成交量图top的余白
+@property (nonatomic, assign) CGFloat MALineWidth; // MA线或者dif线等线的宽度
+
 
 // 正负颜色
 @property (nonatomic, strong) UIColor *positiveColor;
 @property (nonatomic, strong) UIColor *negativeColor;
+// MA相关颜色
+@property (nonatomic, strong) UIColor *ma5Color;
+@property (nonatomic, strong) UIColor *ma10Color;
+@property (nonatomic, strong) UIColor *ma20Color;
+@property (nonatomic, strong) UIColor *ma30Color;
 
 // KLine相关
 @property (nonatomic, assign) CGFloat maxHigh;
@@ -37,5 +45,7 @@
 
 
 + (instancetype)sharedInstance;
+
+- (UIColor *)getBgColorWithLineType:(DXLineType)lineType;
 
 @end
