@@ -10,59 +10,70 @@
 
 @interface DXKLinePainter ()
 
-@property (nonatomic, strong) NSMutableArray *kLineLayers;
-@property (nonatomic, strong) NSMutableArray *volumeLineLayers;
+@property (nonatomic, strong) NSMutableArray<DXKLineLayer *> *kLineLayers;
+@property (nonatomic, strong) NSMutableArray<DXVolumeLayer *> *volumeLineLayers;
+@property (nonatomic, strong) NSMutableArray<DXLineLayer *> *MALineLayers;
 
 @end
 
 @implementation DXKLinePainter
 
 - (void)clearContent{
-    
+    [self clearMA];
+    [self clearKLine];
+    [self clearVolume];
     
 }
+- (void)clearMA{
+    for (DXBaseLayer *lay in _MALineLayers) {
+        lay.path = NULL;
+    }
+}
+- (void)clearKLine{
+    for (DXBaseLayer *lay in _kLineLayers) {
+        lay.path = NULL;
+    }
+}
+- (void)clearVolume{
+    for (DXBaseLayer *lay in _volumeLineLayers) {
+        lay.path = NULL;
+    }
+}
+
 
 - (void)reloadWithModels:(NSArray<DXkLineModel *> *)models{
+#pragma warning - 这个地方需要确定下是否需要已有kLineLayers，伪代码
+    /**
+     maxCount >= kLineLayers.count >= minCount
+     volumeLineLayers用上
+     */
+    [super reloadWithModels:models];
+    
     DXkLineModelConfig *config = [DXkLineModelConfig sharedInstance];
-    // add dash
-    DXDashLayer *dashLayer1 = [DXDashLayer layerWithStartPoint:CGPointMake(0, config.painterTopHeight / 4.) endPoint:CGPointMake(config.painterWidth, config.painterTopHeight / 4.)];
-    DXBaseLayer *midLineLayer = [DXBaseLayer layer];
-    midLineLayer.frame = CGRectMake(0, config.painterTopHeight / 2., config.painterWidth, 0.5);
-    midLineLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
-    DXDashLayer *dashLayer2 = [DXDashLayer layerWithStartPoint:CGPointMake(0, config.painterTopHeight / 4. * 3.) endPoint:CGPointMake(config.painterWidth, config.painterTopHeight / 4. * 3.)];
-    DXDashLayer *dashLayer3 = [DXDashLayer layerWithStartPoint:CGPointMake(0, config.painterTopHeight / 4. * 5. + config.painterMidGap) endPoint:CGPointMake(config.painterWidth, config.painterTopHeight / 4. * 5. + config.painterMidGap)];
-    
-    
-    DXLineLayer *ma5Line = [DXLineLayer layerWithType:DXLineTypeMA5];
-    DXLineLayer *ma10Line = [DXLineLayer layerWithType:DXLineTypeMA10];
-    DXLineLayer *ma20Line = [DXLineLayer layerWithType:DXLineTypeMA20];
-    DXLineLayer *ma30Line = [DXLineLayer layerWithType:DXLineTypeMA30];
     
     // add kline ,volume
     for (int i = 0 ; i < models.count; i ++) {
+        /**
+         如果没有则每个都到数组里面去
+         有的话&数量相同则取出来更新
+         不同的话是否需要补足？还是直接取最大数
+         */
+        DXVolumeLayer *volumeLayershapeLayer = self.volumeLineLayers[i]; // 需要抽离
+        [volumeLayershapeLayer setLayerWithModel:models[i] index:i];
         
-        if (!self.volumeLineLayers.count) {
-            DXVolumeLayer *volumeLayershapeLayer = [DXVolumeLayer layer]; // 需要抽离
-            [volumeLayershapeLayer setLayerWithModel:models[i] index:i];
-            [self.layer addSublayer:volumeLayershapeLayer];
-        }
-        if (!self.kLineLayers.count) {
-            DXKLineLayer *kLineshapeLayer = [DXKLineLayer layer]; // 需要抽离
-            [self.kLineLayers addObject:kLineshapeLayer];
-            [kLineshapeLayer setLayerWithModel:models[i] index:i];
-            [self.layer addSublayer:kLineshapeLayer];
-        }
+        DXKLineLayer *kLineshapeLayer = self.kLineLayers[i]; // 需要抽离
+        [kLineshapeLayer setLayerWithModel:models[i] index:i];
         
-        [ma5Line setLayerWithModel:models[i] index:i];
-        [ma10Line setLayerWithModel:models[i] index:i];
-        [ma20Line setLayerWithModel:models[i] index:i];
-        [ma30Line setLayerWithModel:models[i] index:i];
+        [self.MALineLayers[0] setLayerWithModel:models[i] index:i];
+        [self.MALineLayers[1] setLayerWithModel:models[i] index:i];
+        [self.MALineLayers[2] setLayerWithModel:models[i] index:i];
+        [self.MALineLayers[3] setLayerWithModel:models[i] index:i];
         
         if (i == (models.count - 1)){
-            [ma5Line finishDrawPath];
-            [ma30Line finishDrawPath];
-            [ma20Line finishDrawPath];
-            [ma10Line finishDrawPath];
+            [self.MALineLayers[0] finishDrawPath];
+            [self.MALineLayers[1] finishDrawPath];
+            [self.MALineLayers[2] finishDrawPath];
+            [self.MALineLayers[3] finishDrawPath];
         }
         
     }
@@ -71,23 +82,42 @@
     DXBorderLayer *topBorder = [DXBorderLayer layerWithFrame:CGRectMake(0, 0, config.painterWidth, config.painterTopHeight)];
     DXBorderLayer *bottomBorder = [DXBorderLayer layerWithFrame:CGRectMake(0, config.painterBottomToTop, config.painterWidth, config.painterBottomHeight)];
     // notice: 有顺序
-    [self.layer addSublayer:dashLayer1];
-    [self.layer addSublayer:dashLayer2];
-    [self.layer addSublayer:midLineLayer];
-    [self.layer addSublayer:dashLayer3];
     [self.layer addSublayer:topBorder];
     [self.layer addSublayer:bottomBorder];
-    [self.layer addSublayer:ma5Line];
-    [self.layer addSublayer:ma10Line];
-    [self.layer addSublayer:ma20Line];
-    [self.layer addSublayer:ma30Line];
+    [self.layer addSublayer:self.MALineLayers[0] ];
+    [self.layer addSublayer:self.MALineLayers[1] ];
+    [self.layer addSublayer:self.MALineLayers[2] ];
+    [self.layer addSublayer:self.MALineLayers[3] ];
 }
 
 #pragma mark - Getter & Setter
 
+- (NSMutableArray<DXLineLayer *> *)MALineLayers{
+    if (!_MALineLayers) {
+        _MALineLayers = [NSMutableArray array];
+        DXLineLayer *ma5Line = [DXLineLayer layerWithType:DXLineTypeMA5];
+        DXLineLayer *ma10Line = [DXLineLayer layerWithType:DXLineTypeMA10];
+        DXLineLayer *ma20Line = [DXLineLayer layerWithType:DXLineTypeMA20];
+        DXLineLayer *ma30Line = [DXLineLayer layerWithType:DXLineTypeMA30];
+        [_MALineLayers addObject:ma5Line];
+        [_MALineLayers addObject:ma10Line];
+        [_MALineLayers addObject:ma20Line];
+        [_MALineLayers addObject:ma30Line];
+    }
+    return _MALineLayers;
+}
+
 - (NSMutableArray *)kLineLayers{
     if (!_kLineLayers) {
         _kLineLayers = [NSMutableArray array];
+        @autoreleasepool {
+            // use max count
+            for (int i = 0; i < 100; i++) {
+                DXKLineLayer *kLineshapeLayer = [DXKLineLayer layer];
+                [_kLineLayers addObject:kLineshapeLayer];
+                [self.layer addSublayer:kLineshapeLayer];
+            }
+        }
     }
     return _kLineLayers;
 }
@@ -95,6 +125,14 @@
 - (NSMutableArray *)volumeLineLayers{
     if (!_volumeLineLayers) {
         _volumeLineLayers = [NSMutableArray array];
+        @autoreleasepool {
+            // use max count
+            for (int i = 0; i < 100; i++) {
+                DXVolumeLayer *volumeShapeLayer = [DXVolumeLayer layer];
+                [_volumeLineLayers addObject:volumeShapeLayer];
+                [self.layer addSublayer:volumeShapeLayer];
+            }
+        }
     }
     return _volumeLineLayers;
 }
