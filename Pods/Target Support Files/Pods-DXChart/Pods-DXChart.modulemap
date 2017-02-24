@@ -1,0 +1,6 @@
+framework module Pods_DXChart {
+  umbrella header "Pods-DXChart-umbrella.h"
+
+  export *
+  module * { export * }
+}
