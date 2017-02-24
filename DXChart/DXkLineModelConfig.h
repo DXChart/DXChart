@@ -21,7 +21,14 @@
 @property (nonatomic, assign) CGFloat layerToLayerGap; // layer之间的间隙
 @property (nonatomic, assign) CGFloat scale; // 目前的缩放比例
 @property (nonatomic, assign) CGFloat kLineWidth; // k线宽
+@property (nonatomic, assign) CGFloat kOriginLineWidth; //初始K线宽度
 @property (nonatomic, assign) CGFloat topMargin; // 成交量图top的余白
+
+@property (nonatomic,assign) CGFloat scaleBound; // 触发缩放最小距离0.03f
+@property (nonatomic,assign) CGFloat ScaleFactor; //缩放因子 0.03f
+
+@property (nonatomic,assign) CGFloat maxScale; 
+@property (nonatomic,assign) CGFloat minScale;
 
 // 正负颜色
 @property (nonatomic, strong) UIColor *positiveColor;

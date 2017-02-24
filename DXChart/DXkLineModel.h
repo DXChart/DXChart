@@ -20,7 +20,8 @@ typedef struct  {
 
 
 @interface DXkLineModelArray : NSObject<YYModel>
-
++ (instancetype)sharedInstance;
+@property (nonatomic,assign) NSInteger arrayCount;
 @property (nonatomic, strong) NSArray<DXkLineModel *> * chartlist;
 @property (nonatomic, assign) BOOL success;
 // caculator max volume

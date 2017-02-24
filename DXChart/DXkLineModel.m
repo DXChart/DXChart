@@ -25,8 +25,26 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
 
 @implementation DXkLineModelArray
 
++ (instancetype)sharedInstance{
+    static id instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        //加载本地数据,创建单列对象
+        NSString *filepath = [[NSBundle mainBundle] pathForResource:@"kLineForDay" ofType:@"json"];
+        NSData *data = [NSData dataWithContentsOfFile:filepath];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        instance = [DXkLineModelArray yy_modelWithDictionary:json];
+    });
+    return instance;
+}
+
 + (NSDictionary<NSString *,id> *)modelContainerPropertyGenericClass{
     return @{@"chartlist":[DXkLineModel class]};
+}
+
+- (void)setChartlist:(NSArray<DXkLineModel *> *)chartlist{
+    _chartlist = chartlist;
+    _arrayCount = chartlist.count;
 }
 
 - (NSInteger)calculateMaxVolumeIndexWithRange:(NSRange)rang{

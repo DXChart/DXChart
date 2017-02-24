@@ -17,6 +17,7 @@
 #import "DXDashLayer.h"
 #import "DXVolumeLayer.h"
 #import "DXLineLayer.h"
+#import "DXTopScrollView.h"
 
 @interface ViewController ()
 
@@ -58,8 +59,18 @@
     config.kLineWidth = 5;
     config.painterWidth = self.view.frame.size.width - 2 *_margin;
     // 消除左边多余出来的 x - _width/2.
-    DXBasePainter *painter = [[DXBasePainter alloc] initWithFrame:CGRectMake(_margin , 100, config.painterWidth, height + topMargin)];
+    CGRect paintRect = CGRectMake(_margin , 245, config.painterWidth, height + topMargin);
+    
+    DXBasePainter *painter = [[DXBasePainter alloc] initWithFrame:paintRect];
     [self.view addSubview:painter];
+    
+    DXTopScrollView *topScroll = [[DXTopScrollView alloc]initWithFrame:paintRect];
+    [self.view addSubview:topScroll];
+    
+    //test
+    [DXkLineModelArray sharedInstance].arrayCount = models.chartlist.count;
+    
+    //end
     
     // calculate all visiable line
     NSInteger visableCount = painter.frame.size.width / (config.kLineWidth + config.layerToLayerGap);

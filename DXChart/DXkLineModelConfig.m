@@ -26,7 +26,15 @@
         config.painterTopHeight = 180;
         config.painterBottomHeight = 60;
         config.topMargin = 2;
-        config.kLineWidth = 5;
+        config.kOriginLineWidth = 5;
+        config.kLineWidth = config.kOriginLineWidth;
+        config.scaleBound = 0.03;
+        config.ScaleFactor = 0.03f;
+        //一定在scale之前设置
+        config.minScale = 0.3;
+        config.maxScale = 3;
+        config.scale = 1.0f;
+
     });
     return config;
 }
@@ -42,5 +50,15 @@
 - (CGFloat)lowest{
     return _minLow - ( _maxHigh - _minLow) / 6;
 }
+- (void)setScale:(CGFloat)scale{
+    if (scale > _maxScale) {
+        _scale = _maxScale;
+    }else if(scale < _minScale){
+        _scale = _minScale;
+    }else{
+        _scale = scale;
+    }
+}
+
 
 @end

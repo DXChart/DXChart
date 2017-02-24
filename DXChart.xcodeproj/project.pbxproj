@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		236F0F6A1E5FFDD5004D0748 /* DXTopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 236F0F691E5FFDD5004D0748 /* DXTopScrollView.m */; };
 		BD3A99B91E5E76A60089104B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BD3A99B81E5E76A60089104B /* main.m */; };
 		BD3A99BC1E5E76A60089104B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BD3A99BB1E5E76A60089104B /* AppDelegate.m */; };
 		BD3A99BF1E5E76A60089104B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BD3A99BE1E5E76A60089104B /* ViewController.m */; };
@@ -45,6 +46,8 @@
 
 /* Begin PBXFileReference section */
 		0A14B1ABA08F83CE135A33CF /* Pods-DXChart.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DXChart.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DXChart/Pods-DXChart.debug.xcconfig"; sourceTree = "<group>"; };
+		236F0F681E5FFDD5004D0748 /* DXTopScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXTopScrollView.h; sourceTree = "<group>"; };
+		236F0F691E5FFDD5004D0748 /* DXTopScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXTopScrollView.m; sourceTree = "<group>"; };
 		5F1AD06B87F5252028321870 /* Pods_DXChart.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DXChart.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD3A99B41E5E76A60089104B /* DXChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DXChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD3A99B81E5E76A60089104B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -103,6 +106,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		236F0F671E5FFDA6004D0748 /* ScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				236F0F681E5FFDD5004D0748 /* DXTopScrollView.h */,
+				236F0F691E5FFDD5004D0748 /* DXTopScrollView.m */,
+			);
+			name = ScrollView;
+			sourceTree = "<group>";
+		};
 		BD3A99AB1E5E76A60089104B = {
 			isa = PBXGroup;
 			children = (
@@ -130,11 +142,6 @@
 				BD3A99BB1E5E76A60089104B /* AppDelegate.m */,
 				BD3A99BD1E5E76A60089104B /* ViewController.h */,
 				BD3A99BE1E5E76A60089104B /* ViewController.m */,
-				BD3A99C01E5E76A60089104B /* Main.storyboard */,
-				BD3A99C31E5E76A60089104B /* Assets.xcassets */,
-				BD3A99C51E5E76A60089104B /* LaunchScreen.storyboard */,
-				BD3A99C81E5E76A60089104B /* Info.plist */,
-				BD3A99D31E5E770A0089104B /* kLineForDay.json */,
 				BD3A99B71E5E76A60089104B /* Supporting Files */,
 			);
 			path = DXChart;
@@ -143,6 +150,11 @@
 		BD3A99B71E5E76A60089104B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BD3A99C01E5E76A60089104B /* Main.storyboard */,
+				BD3A99C31E5E76A60089104B /* Assets.xcassets */,
+				BD3A99C51E5E76A60089104B /* LaunchScreen.storyboard */,
+				BD3A99C81E5E76A60089104B /* Info.plist */,
+				BD3A99D31E5E770A0089104B /* kLineForDay.json */,
 				BD3A99B81E5E76A60089104B /* main.m */,
 			);
 			name = "Supporting Files";
@@ -151,6 +163,7 @@
 		BD3A99CE1E5E76AD0089104B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				236F0F671E5FFDA6004D0748 /* ScrollView */,
 				BD3A99E01E5E889D0089104B /* Painter */,
 				BD3A99CF1E5E76BA0089104B /* BaseLayer */,
 			);
@@ -333,6 +346,7 @@
 			files = (
 				BD3A99E31E5E88C30089104B /* DXBasePainter.m in Sources */,
 				BD3A99FA1E5FCE530089104B /* DXLineLayer.m in Sources */,
+				236F0F6A1E5FFDD5004D0748 /* DXTopScrollView.m in Sources */,
 				BD3A99EB1E5EAFC40089104B /* DXBorderLayer.m in Sources */,
 				BD3A99E61E5E905D0089104B /* DXkLineModelConfig.m in Sources */,
 				BD3A99D21E5E76DC0089104B /* DXBaseLayer.m in Sources */,
