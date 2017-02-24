@@ -26,6 +26,9 @@
     [super viewDidLoad];
     [self initial];
 
+    
+    
+    
 }
 
 - (void)initial{
