@@ -60,7 +60,6 @@
     
 }
 
-
 - (void)finishDrawPath{
     self.path = _strokePath.CGPath;
 }
