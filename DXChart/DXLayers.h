@@ -15,5 +15,6 @@
 #import "DXKLineLayer.h"
 #import "DXDashLayer.h"
 #import "DXLineLayer.h"
+#import "DXMACDLayer.h"
 
 #endif /* Header_h */

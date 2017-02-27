@@ -34,19 +34,19 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+//    NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
+//    [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
     [self initial];
-
-    
-    
-    
 }
 
 - (void)initial{
     // fetch data
-    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"kLineForDay" ofType:@"json"];
-    NSData *data = [NSData dataWithContentsOfFile:filepath];
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    DXkLineModelArray *models = [DXkLineModelArray yy_modelWithDictionary:json];
+    DXkLineModelArray *models = [DXkLineModelArray sharedInstance];
     // normal
     _margin = 5;
     DXkLineModelConfig *config = [DXkLineModelConfig sharedInstance];
@@ -60,7 +60,7 @@
     config.painterWidth = self.view.frame.size.width - 2 *_margin;
 
     // 消除左边多余出来的 x - _width/2.
-    CGRect paintRect = CGRectMake(_margin , 245, config.painterWidth, height + config.topMargin);
+    CGRect paintRect = CGRectMake(_margin , 100, config.painterWidth, height + config.topMargin);
     
     DXKLinePainter *painter = [[DXKLinePainter alloc] initWithFrame:paintRect];
     _painter = painter;
@@ -84,15 +84,18 @@
     NSInteger visableCount = config.painterWidth / (config.kLineWidth + config.layerToLayerGap);
     // get max volume
     NSRange range = NSMakeRange(startIndex, visableCount);
+    if ((startIndex + visableCount) > [DXkLineModelArray sharedInstance].chartlist.count) return;
+    // time consuming 0.1~0.7 ms 
     NSInteger maxIndex = [models calculateMaxVolumeIndexWithRange:range];
     DXkLineModel *maxModel = models.chartlist[maxIndex];
     config.maxVolume = maxModel.volume;
-    NSLog(@"%ld",config.maxVolume);
     // get max high min low
     maxAndHigh max = [models calculateMaxHightMinLowWithRange:range];
     config.maxHigh = max.maxHigh;
     config.minLow = max.minLow;
-//    [_painter clearMA];
+    maxAndHigh maxMACD = [models calculateMaxAndMinMACDWithRange:range];
+    config.macdHighest = maxMACD.maxHigh;
+    config.macdLowest = maxMACD.minLow;
     [_painter reloadWithModels:[[DXkLineModelArray sharedInstance].chartlist  subarrayWithRange:NSMakeRange(startIndex, visableCount)]];
     
 }

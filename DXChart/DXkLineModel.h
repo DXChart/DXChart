@@ -22,7 +22,9 @@ typedef NS_ENUM(NSUInteger, DXLineType) {
     DXLineTypeMA5 = 1,
     DXLineTypeMA10,
     DXLineTypeMA20,
-    DXLineTypeMA30
+    DXLineTypeMA30,
+    DXLineTypeDIF,
+    DXLineTypeDEA
     
 };
 
@@ -33,8 +35,10 @@ typedef NS_ENUM(NSUInteger, DXLineType) {
 @property (nonatomic, assign) BOOL success;
 // caculator max volume
 - (NSInteger)calculateMaxVolumeIndexWithRange:(NSRange)rang;
-//
+// kLine(MA) max and min
 - (maxAndHigh)calculateMaxHightMinLowWithRange:(NSRange)rang;
+// MACD DIF DEA (DIF - DEA)
+- (maxAndHigh)calculateMaxAndMinMACDWithRange:(NSRange)rang;
 
 @end
 
@@ -65,6 +69,14 @@ typedef NS_ENUM(NSUInteger, DXLineType) {
 @property (nonatomic, assign) CGFloat max;
 // min
 @property (nonatomic, assign) CGFloat min;
+
+// MACD min max
+@property (nonatomic, assign) CGFloat minMACD;
+@property (nonatomic, assign) CGFloat maxMACD;
+@property (nonatomic, assign) BOOL calculatedMaxMACD;
+@property (nonatomic, assign) BOOL calculatedMinMACD;
+@property (nonatomic, assign) BOOL isPositiveMACD;
+
 
 - (CGFloat)getMADataWithType:(DXLineType)type;
 

@@ -8,6 +8,7 @@
 
 #import "DXkLineModel.h"
 #import "DXkLineModelConfig.h"
+#import <mach/mach_time.h>
 
 #define force_inline __inline__ __attribute__((always_inline))
 static force_inline CGFloat getHeight(CGFloat volume, CGFloat maxVolume) {
@@ -63,11 +64,30 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
     NSArray *sortedArr2 = [arr sortedArrayUsingComparator:^NSComparisonResult(DXkLineModel*  _Nonnull obj1, DXkLineModel*  _Nonnull obj2) {
         return obj1.min > obj2.min;
     }];
+    
     DXkLineModel *maxModel = sortedArr1[0];
     DXkLineModel *minModel = sortedArr2[0];
 
     maxAndHigh max = {maxModel.max,minModel.min,0,0};
 
+    return max;
+}
+
+- (maxAndHigh)calculateMaxAndMinMACDWithRange:(NSRange)rang{
+    
+    NSArray *arr = [_chartlist subarrayWithRange:rang];
+    
+    NSArray *sortedArr1 = [arr sortedArrayUsingComparator:^NSComparisonResult(DXkLineModel*  _Nonnull obj1, DXkLineModel*  _Nonnull obj2) {
+        return obj1.maxMACD < obj2.maxMACD;
+    }];
+    NSArray *sortedArr2 = [arr sortedArrayUsingComparator:^NSComparisonResult(DXkLineModel*  _Nonnull obj1, DXkLineModel*  _Nonnull obj2) {
+        return obj1.minMACD > obj2.minMACD;
+    }];
+    DXkLineModel *maxModel = sortedArr1[0];
+    DXkLineModel *minModel = sortedArr2[0];
+    
+    maxAndHigh max = {maxModel.maxMACD,minModel.minMACD,0,0};
+    
     return max;
 }
 
@@ -99,13 +119,19 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
             case DXLineTypeMA30:
                 return _ma30;
             break;
+            case DXLineTypeDIF:
+                return _dif;
+            break;
+            case DXLineTypeDEA:
+                return _dea;
+            break;
             
     }
 }
 
 - (CGFloat)max{
     if (_max) return _max;
-    double h,i,j,k,l;
+    float h,i,j,k,l;
     h = _high;
     i = _ma5;
     j = _ma10;
@@ -121,7 +147,7 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
 
 - (CGFloat)min{
     if (_min) return _min;
-    double h,i,j,k,l;
+    float h,i,j,k,l;
     h = _low;
     i = _ma5;
     j = _ma10;
@@ -133,6 +159,37 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
     if (h > l) h = l;
     _min  = h;
     return _min;
+}
+
+- (CGFloat)maxMACD{
+    if (_calculatedMaxMACD) return _maxMACD;
+    _calculatedMaxMACD = YES;
+    float h,i,j;
+    h = _dif;
+    i = _dea;
+    j = _dif - _dea;
+    if (h < i) h = i;
+    if (h < j) h = j;
+    _maxMACD  = h;
+    return _maxMACD;
+}
+
+- (CGFloat)minMACD{
+    if (_calculatedMinMACD) return _minMACD;
+    _calculatedMinMACD = YES;
+    float h,i,j;
+    h = _dif;
+    i = _dea;
+    j = _dif - _dea;
+    if (h > i) h = i;
+    if (h > j) h = j;
+    _minMACD  = h;
+    return _minMACD;
+}
+
+- (BOOL)isPositiveMACD{
+    
+    return (_dif - _dea) > 0;
 }
 
 @end

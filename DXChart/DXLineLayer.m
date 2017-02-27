@@ -47,10 +47,25 @@
 
 - (void)setLayerWithModel:(DXkLineModel *)model index:(NSInteger)i{
     
-    CGFloat x = i * (_config.kLineWidth + _config.layerToLayerGap)+ _config.MALineWidth/2.;
-    CGFloat totalHeight;
-    CGFloat total = (_config.highest - _config.lowest);
-    totalHeight = _config.painterTopHeight * (_config.highest - [model getMADataWithType:_lineType])/total;
+    CGFloat x = i * (_config.kLineWidth + _config.layerToLayerGap)+ _config.MALineWidth/2. + _config.kLineWidth/2.;
+    CGFloat totalHeight,total;
+    switch (_lineType) {
+            case DXLineTypeMA5:
+            case DXLineTypeMA10:
+            case DXLineTypeMA20:
+            case DXLineTypeMA30:{
+                total = (_config.highest - _config.lowest);
+                totalHeight = _config.painterTopHeight * (_config.highest - [model getMADataWithType:_lineType])/total;
+            }
+            break;
+            case DXLineTypeDIF:
+            case DXLineTypeDEA:{
+                total = (_config.macdHighest - _config.macdLowest);
+                totalHeight =_config.painterHeight - _config.painterBottomHeight * (_config.macdHighest - [model getMADataWithType:_lineType])/total;
+            }
+            break;
+    }
+    
     if (!i) {
        [_strokePath moveToPoint:CGPointMake(x, totalHeight)]; 
     }

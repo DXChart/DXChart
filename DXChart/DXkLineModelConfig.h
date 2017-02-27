@@ -40,6 +40,9 @@
 @property (nonatomic, strong) UIColor *ma10Color;
 @property (nonatomic, strong) UIColor *ma20Color;
 @property (nonatomic, strong) UIColor *ma30Color;
+// MACD相关颜色
+@property (nonatomic, strong) UIColor *difColor;
+@property (nonatomic, strong) UIColor *deaColor;
 
 // KLine相关
 @property (nonatomic, assign) CGFloat maxHigh;
@@ -48,7 +51,8 @@
 @property (nonatomic, assign) CGFloat highest; // (max high - min low) / 6 + max high. 
 @property (nonatomic, assign) CGFloat lowest; // min low - (max high - min low)/ 6.
 
-
+@property (nonatomic, assign) CGFloat macdHighest;
+@property (nonatomic, assign) CGFloat macdLowest;
 
 + (instancetype)sharedInstance;
 

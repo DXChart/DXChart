@@ -15,7 +15,7 @@
     DXBorderLayer *layer = [DXBorderLayer layer];
     UIBezierPath *path = [UIBezierPath bezierPathWithRect:frame];
     layer.path = path.CGPath;
-    layer.lineWidth = 0.3;
+    layer.lineWidth = 0.5;
     layer.strokeColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5].CGColor;
     layer.fillColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0].CGColor;
     

@@ -29,14 +29,16 @@
         config.scaleBound = 0.03;
         config.ScaleFactor = 0.03f;
         //一定在scale之前设置
-        config.minScale = 0.3;
-        config.maxScale = 3;
+        config.minScale = 0.5;
+        config.maxScale = 2;
         config.scale = 1.0f;
         config.kLineWidth = 5;
         config.ma5Color = [UIColor orangeColor];
         config.ma10Color = [UIColor cyanColor];
         config.ma20Color = [UIColor blueColor];
         config.ma30Color = [UIColor purpleColor];
+        config.difColor = [UIColor magentaColor];
+        config.deaColor = [UIColor brownColor];
         config.MALineWidth = 0.5;
     });
     return config;
@@ -46,16 +48,22 @@
 -(UIColor *)getBgColorWithLineType:(DXLineType)lineType{
     switch (lineType) {
             case DXLineTypeMA5:
-            return _ma5Color;
+                return _ma5Color;
             break;
             case DXLineTypeMA10:
-            return _ma10Color;
+                return _ma10Color;
             break;
             case DXLineTypeMA20:
-            return _ma20Color;
+                return _ma20Color;
             break;
             case DXLineTypeMA30:
-            return _ma30Color;
+                return _ma30Color;
+            break;
+            case DXLineTypeDIF:
+                return _difColor;
+            break;
+            case DXLineTypeDEA:
+                return _deaColor;
             break;
             
     }
