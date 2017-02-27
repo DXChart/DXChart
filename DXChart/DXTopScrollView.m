@@ -31,12 +31,11 @@
 }
 
 - (void)private_setupUI{
-    self.backgroundColor = [UIColor blueColor];
-    self.alpha = 0.3;
     self.delegate = self;
     self.bounces = NO;
     self.decelerationRate = 0.8;
-    
+    self.showsHorizontalScrollIndicator = NO;
+    self.showsVerticalScrollIndicator = NO;
     //pinch gesture
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(event_pinchGesture:)];
     [self addGestureRecognizer:pinch];
@@ -83,8 +82,6 @@
             }else{
                 self.contentOffset = CGPointMake(contentOffX, 0);
             }
-            
-            
         }
     }
 }
