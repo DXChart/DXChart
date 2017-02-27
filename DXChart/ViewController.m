@@ -87,7 +87,7 @@
     NSInteger maxIndex = [models calculateMaxVolumeIndexWithRange:range];
     DXkLineModel *maxModel = models.chartlist[maxIndex];
     config.maxVolume = maxModel.volume;
-    NSLog(@"%ld",config.maxVolume);
+//    NSLog(@"%ld",config.maxVolume);
     // get max high min low
     maxAndHigh max = [models calculateMaxHightMinLowWithRange:range];
     config.maxHigh = max.maxHigh;
