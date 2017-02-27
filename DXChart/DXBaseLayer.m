@@ -18,5 +18,26 @@
     self.path = NULL;
 }
 
+- (void)setPath:(CGPathRef)path{
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    [super setPath:path];
+    [CATransaction commit];
+    
+    
+}
 
+- (void)setStrokeColor:(CGColorRef)strokeColor{
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    [super setStrokeColor:strokeColor];
+    [CATransaction commit];
+}
+
+- (void)setFillColor:(CGColorRef)fillColor{
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    [super setFillColor:fillColor];
+    [CATransaction commit];
+}
 @end

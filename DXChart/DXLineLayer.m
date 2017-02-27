@@ -63,5 +63,9 @@
 - (void)finishDrawPath{
     self.path = _strokePath.CGPath;
 }
+- (void)clearPath{
+    self.path = NULL;
+    [self.strokePath removeAllPoints];
+}
 
 @end

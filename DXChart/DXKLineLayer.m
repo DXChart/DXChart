@@ -11,7 +11,7 @@
 
 @implementation DXKLineLayer
 - (void)setLayerWithModel:(DXkLineModel *)model index:(NSInteger)i{
-    
+
     CGFloat lineWidth = 1;
     self.lineWidth = lineWidth;
     DXkLineModelConfig *config = [DXkLineModelConfig sharedInstance];
@@ -33,7 +33,6 @@
     
     self.path = path.CGPath;
     self.strokeColor = self.fillColor = model.isPositive ? config.positiveColor.CGColor : config.negativeColor.CGColor;
-    
 }
 
 @end
