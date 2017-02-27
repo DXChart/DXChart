@@ -12,8 +12,9 @@
 
 @interface DXTopScrollView ()<UIScrollViewDelegate>
 @property (nonatomic,assign) CGFloat oldOffsetX;
-@property (nonatomic,assign) NSInteger lastIndex;
 
+@property (nonatomic,assign) NSInteger startIndex;
+@property (nonatomic,assign) NSInteger lastIndex;
 @property (nonatomic,assign) NSInteger showCount;
 
 @end
@@ -60,7 +61,6 @@
             self.lastIndex = [DXkLineModelArray sharedInstance].arrayCount - 1;
             self.contentSize = CGSizeMake(contentWidth, modelConfig. painterHeight);
             self.contentOffset = CGPointMake(contentWidth - self.bounds.size.width, 0);
-            self.oldOffsetX = self.contentOffset.x;
         }
         if (isLineWidthChange) {
             
@@ -89,20 +89,21 @@
 
 #pragma mark - <UIScrollViewDelegate>
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    CGFloat distance = scrollView.contentOffset.x - self.oldOffsetX;
     CGFloat minMoveWidth = [DXkLineModelConfig sharedInstance].kLineWidth + [DXkLineModelConfig sharedInstance].layerToLayerGap;
-    
-    if (ABS(distance) < minMoveWidth)
-        return;
     
     NSInteger startIndex = (NSInteger)(self.contentOffset.x / minMoveWidth) - 1;
     startIndex < 0 ? startIndex = 0 : startIndex;
+
+    NSInteger lastIndex = startIndex + self.showCount;
+    //同样的数据 不需要调用代理
+    if (self.startIndex == startIndex && self.lastIndex == lastIndex) {
+        return;
+    }
     
-    self.oldOffsetX = scrollView.contentOffset.x;
-    self.lastIndex = startIndex + self.showCount;
+    NSLog(@"move %ld  lastIndex %ld",startIndex,lastIndex);
     
-//    NSLog(@"move %ld  lastIndex %ld",startIndex,self.lastIndex);
-    
+    self.lastIndex = lastIndex;
+    self.startIndex = startIndex;
     if (self.topScrollDelegate && [self.topScrollDelegate respondsToSelector:@selector(topScrollView:startIndex:)]) {
         [self.topScrollDelegate topScrollView:self startIndex:startIndex];
     }

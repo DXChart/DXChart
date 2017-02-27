@@ -34,7 +34,7 @@
         config.minScale = 0.3;
         config.maxScale = 3;
         config.scale = 1.0f;
-        config.kLineWidth = 5;
+        config.kLineWidth = 3;
         config.ma5Color = [UIColor orangeColor];
         config.ma10Color = [UIColor cyanColor];
         config.ma20Color = [UIColor blueColor];
