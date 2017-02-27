@@ -14,7 +14,8 @@
 @property (nonatomic, strong) NSMutableArray<DXKLineLayer *> *kLineLayers;
 @property (nonatomic, strong) NSMutableArray<DXVolumeLayer *> *volumeLineLayers;
 @property (nonatomic, strong) NSMutableArray<DXLineLayer *> *MALineLayers;
-@property (nonatomic, strong) NSMutableArray<DXMACDLayer *> *macdLineLayers;
+@property (nonatomic, strong) NSMutableArray<DXMACDLayer *> *macdColLineLayers;
+@property (nonatomic, strong) NSMutableArray<DXLineLayer *> *macdLineLayers;
 
 @end
 
@@ -24,6 +25,7 @@
     [self clearMA];
     [self clearKLine];
     [self clearVolume];
+    [self clearMACD];
     
 }
 - (void)clearMA{
@@ -41,6 +43,16 @@
         lay.path = NULL;
     }
 }
+
+- (void)clearMACD{
+    for (DXBaseLayer *lay in _macdColLineLayers) {
+        lay.path = NULL;
+    }
+    for (DXBaseLayer * lay in _macdLineLayers) {
+        lay.path = NULL;
+    }
+}
+
 
 
 - (void)reloadWithModels:(NSArray<DXkLineModel *> *)models{
@@ -62,7 +74,7 @@
 //        DXVolumeLayer *volumeLayershapeLayer = self.volumeLineLayers[i];
 //        [volumeLayershapeLayer setLayerWithModel:models[i] index:i];
         // macd
-        DXMACDLayer *macdLayer = self.macdLineLayers[i];
+        DXMACDLayer *macdLayer = self.macdColLineLayers[i];
         [macdLayer setLayerWithModel:models[i] index:i];
         
         DXKLineLayer *kLineshapeLayer = self.kLineLayers[i];
@@ -74,16 +86,16 @@
         [self.MALineLayers[2] setLayerWithModel:models[i] index:i];
         [self.MALineLayers[3] setLayerWithModel:models[i] index:i];
         // MACD Line
-        [self.MALineLayers[4] setLayerWithModel:models[i] index:i];
-        [self.MALineLayers[5] setLayerWithModel:models[i] index:i];
+        [self.macdLineLayers[0] setLayerWithModel:models[i] index:i];
+        [self.macdLineLayers[1] setLayerWithModel:models[i] index:i];
         
         if (i == (models.count - 1)){
             [self.MALineLayers[0] finishDrawPath];
             [self.MALineLayers[1] finishDrawPath];
             [self.MALineLayers[2] finishDrawPath];
             [self.MALineLayers[3] finishDrawPath];
-            [self.MALineLayers[4] finishDrawPath];
-            [self.MALineLayers[5] finishDrawPath];
+            [self.macdLineLayers[0] finishDrawPath];
+            [self.macdLineLayers[1] finishDrawPath];
         }
         
     }
@@ -98,20 +110,17 @@
         DXLineLayer *ma10Line = [DXLineLayer layerWithType:DXLineTypeMA10];
         DXLineLayer *ma20Line = [DXLineLayer layerWithType:DXLineTypeMA20];
         DXLineLayer *ma30Line = [DXLineLayer layerWithType:DXLineTypeMA30];
-        DXLineLayer *difLine = [DXLineLayer layerWithType:DXLineTypeDIF];
-        DXLineLayer *deaLine = [DXLineLayer layerWithType:DXLineTypeDEA];
+
         [_MALineLayers addObject:ma5Line];
         [_MALineLayers addObject:ma10Line];
         [_MALineLayers addObject:ma20Line];
         [_MALineLayers addObject:ma30Line];
-        [_MALineLayers addObject:difLine];
-        [_MALineLayers addObject:deaLine];
+
         [self.layer addSublayer:ma5Line ];
         [self.layer addSublayer:ma10Line ];
         [self.layer addSublayer:ma20Line ];
         [self.layer addSublayer:ma30Line];
-        [self.layer addSublayer:difLine];
-        [self.layer addSublayer:deaLine];
+
     }
     return _MALineLayers;
 }
@@ -146,15 +155,33 @@
     return _volumeLineLayers;
 }
 
-- (NSMutableArray<DXMACDLayer *> *)macdLineLayers{
+- (NSMutableArray<DXMACDLayer *> *)macdColLineLayers{
+    if (!_macdColLineLayers) {
+        _macdColLineLayers = [NSMutableArray array];
+        @autoreleasepool {
+            // use max count
+            for (int i = 0; i < 180; i++) {
+                DXMACDLayer *volumeShapeLayer = [DXMACDLayer layer];
+                [_macdColLineLayers addObject:volumeShapeLayer];
+                [self.layer addSublayer:volumeShapeLayer];
+            }
+        }
+    }
+    return _macdColLineLayers;
+}
+
+- (NSMutableArray<DXLineLayer *> *)macdLineLayers{
     if (!_macdLineLayers) {
         _macdLineLayers = [NSMutableArray array];
         @autoreleasepool {
             // use max count
             for (int i = 0; i < 180; i++) {
-                DXMACDLayer *volumeShapeLayer = [DXMACDLayer layer];
-                [_macdLineLayers addObject:volumeShapeLayer];
-                [self.layer addSublayer:volumeShapeLayer];
+                DXLineLayer *difLine = [DXLineLayer layerWithType:DXLineTypeDIF];
+                DXLineLayer *deaLine = [DXLineLayer layerWithType:DXLineTypeDEA];
+                [_macdLineLayers addObject:difLine];
+                [_macdLineLayers addObject:deaLine];
+                [self.layer addSublayer:difLine];
+                [self.layer addSublayer:deaLine];
             }
         }
     }
