@@ -7,14 +7,15 @@
 //
 
 #import "DXBaseLayer.h"
-#import "DXkLineModelConfig.h"
-
-
 
 @implementation DXBaseLayer
 
 - (void)setLayerWithModel:(DXkLineModel *)model index:(NSInteger)i{
     
+}
+
+- (void)clearPath{
+    self.path = NULL;
 }
 
 @end

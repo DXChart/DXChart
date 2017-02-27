@@ -18,6 +18,13 @@ typedef struct  {
     NSInteger minLowIndex;
 }maxAndHigh;
 
+typedef NS_ENUM(NSUInteger, DXLineType) {
+    DXLineTypeMA5 = 1,
+    DXLineTypeMA10,
+    DXLineTypeMA20,
+    DXLineTypeMA30
+    
+};
 
 @interface DXkLineModelArray : NSObject<YYModel>
 + (instancetype)sharedInstance;
@@ -54,5 +61,11 @@ typedef struct  {
 
 // view model
 @property (nonatomic, assign) CGFloat height;
+// max high (has high and ma series..)
+@property (nonatomic, assign) CGFloat max;
+// min
+@property (nonatomic, assign) CGFloat min;
+
+- (CGFloat)getMADataWithType:(DXLineType)type;
 
 @end

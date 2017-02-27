@@ -10,6 +10,14 @@
 
 @interface DXLineLayer : DXBaseLayer
 
+@property (nonatomic, strong, readonly) UIBezierPath *strokePath;
+
+// 直线
 + (instancetype)layerWithStartPoint:(CGPoint)point endPoint:(CGPoint)endPoint;
+
++ (instancetype)layerWithType:(DXLineType)lineType;
+
+
+- (void)finishDrawPath;
 
 @end

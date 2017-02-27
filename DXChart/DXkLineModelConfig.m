@@ -34,10 +34,36 @@
         config.minScale = 0.3;
         config.maxScale = 3;
         config.scale = 1.0f;
-
+        config.kLineWidth = 5;
+        config.ma5Color = [UIColor orangeColor];
+        config.ma10Color = [UIColor cyanColor];
+        config.ma20Color = [UIColor blueColor];
+        config.ma30Color = [UIColor purpleColor];
+        config.MALineWidth = 0.5;
     });
     return config;
 }
+
+
+-(UIColor *)getBgColorWithLineType:(DXLineType)lineType{
+    switch (lineType) {
+            case DXLineTypeMA5:
+            return _ma5Color;
+            break;
+            case DXLineTypeMA10:
+            return _ma10Color;
+            break;
+            case DXLineTypeMA20:
+            return _ma20Color;
+            break;
+            case DXLineTypeMA30:
+            return _ma30Color;
+            break;
+            
+    }
+}
+
+#pragma mark - Getter & Setter
 
 - (CGFloat)painterBottomToTop{
     return _painterMidGap + _painterTopHeight;
@@ -59,6 +85,8 @@
         _scale = scale;
     }
 }
+
+
 
 
 @end

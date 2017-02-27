@@ -13,4 +13,6 @@
 
 - (void)setLayerWithModel:(DXkLineModel *)model index:(NSInteger)i;
 
+- (void)clearPath;
+
 @end

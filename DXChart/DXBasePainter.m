@@ -8,8 +8,16 @@
 
 #import "DXBasePainter.h"
 
+
 @implementation DXBasePainter
 
+- (void)clearContent{
+    
+}
+
+- (void)reload{
+    
+}
 
 
 @end

@@ -18,13 +18,11 @@
 #import "DXVolumeLayer.h"
 #import "DXLineLayer.h"
 #import "DXTopScrollView.h"
+#import "DXLayers.h"
 
 @interface ViewController ()
 
-@property (nonatomic, assign) CGFloat layerToLayerGap;
 @property (nonatomic, assign) CGFloat margin;
-@property (nonatomic, assign) CGFloat scale;
-@property (nonatomic, assign) CGFloat width;
 
 @end
 
@@ -48,7 +46,6 @@
     DXkLineModelArray *models = [DXkLineModelArray yy_modelWithDictionary:json];
     // normal
     _margin = 5;
-    CGFloat topMargin = 2;
     DXkLineModelConfig *config = [DXkLineModelConfig sharedInstance];
     config.painterMidGap = 10;
     config.painterTopHeight = 110;
@@ -59,9 +56,11 @@
     config.kLineWidth = 5;
     config.painterWidth = self.view.frame.size.width - 2 *_margin;
     // 消除左边多余出来的 x - _width/2.
-    CGRect paintRect = CGRectMake(_margin , 245, config.painterWidth, height + topMargin);
+
+    CGRect paintRect = CGRectMake(_margin , 245, config.painterWidth, height + config.topMargin);
     
     DXBasePainter *painter = [[DXBasePainter alloc] initWithFrame:paintRect];
+
     [self.view addSubview:painter];
     
     DXTopScrollView *topScroll = [[DXTopScrollView alloc]initWithFrame:paintRect];
@@ -75,7 +74,7 @@
     // calculate all visiable line
     NSInteger visableCount = painter.frame.size.width / (config.kLineWidth + config.layerToLayerGap);
     
-    //get max volume
+    // get max volume
     NSInteger maxIndex = [models calculateMaxVolumeIndexWithRange:NSMakeRange(0, visableCount)];
     DXkLineModel *maxModel = models.chartlist[maxIndex];
     config.maxVolume = maxModel.volume;
@@ -95,17 +94,38 @@
     [painter.layer addSublayer:dashLayer2];
     [painter.layer addSublayer:midLineLayer];
     [painter.layer addSublayer:dashLayer3];
-    
+
+    DXLineLayer *ma5Line = [DXLineLayer layerWithType:DXLineTypeMA5];
+    DXLineLayer *ma10Line = [DXLineLayer layerWithType:DXLineTypeMA10];
+    DXLineLayer *ma20Line = [DXLineLayer layerWithType:DXLineTypeMA20];
+    DXLineLayer *ma30Line = [DXLineLayer layerWithType:DXLineTypeMA30];
+    [painter.layer addSublayer:ma5Line];
+    [painter.layer addSublayer:ma10Line];
+    [painter.layer addSublayer:ma20Line];
+    [painter.layer addSublayer:ma30Line];
     // add kline ,volume
     for (int i = 0 ; i < visableCount; i ++) {
         
-        DXVolumeLayer *volumeLayershapeLayer = [DXVolumeLayer layer];
+        DXVolumeLayer *volumeLayershapeLayer = [DXVolumeLayer layer]; // 需要抽离
         [volumeLayershapeLayer setLayerWithModel:models.chartlist[i] index:i];
         [painter.layer addSublayer:volumeLayershapeLayer];
         
-        DXKLineLayer *kLineshapeLayer = [DXKLineLayer layer];
+        DXKLineLayer *kLineshapeLayer = [DXKLineLayer layer]; // 需要抽离
         [kLineshapeLayer setLayerWithModel:models.chartlist[i] index:i];
         [painter.layer addSublayer:kLineshapeLayer];
+        
+        [ma5Line setLayerWithModel:models.chartlist[i] index:i];
+        [ma10Line setLayerWithModel:models.chartlist[i] index:i];
+        [ma20Line setLayerWithModel:models.chartlist[i] index:i];
+        [ma30Line setLayerWithModel:models.chartlist[i] index:i];
+        
+        if (i == (visableCount - 1)){
+            [ma5Line finishDrawPath];
+            [ma30Line finishDrawPath];
+            [ma20Line finishDrawPath];
+            [ma10Line finishDrawPath];
+        }
+        
     }
     
     // add border
