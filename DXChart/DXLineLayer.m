@@ -57,7 +57,6 @@
     else{
        [_strokePath addLineToPoint:CGPointMake(x, totalHeight)];
     }
-    
 }
 
 - (void)finishDrawPath{

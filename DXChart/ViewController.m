@@ -60,7 +60,6 @@
     config.painterWidth = self.view.frame.size.width - 2 *_margin;
 
     // 消除左边多余出来的 x - _width/2.
-
     CGRect paintRect = CGRectMake(_margin , 245, config.painterWidth, height + config.topMargin);
     
     DXKLinePainter *painter = [[DXKLinePainter alloc] initWithFrame:paintRect];
@@ -75,10 +74,6 @@
     
     //test
     [DXkLineModelArray sharedInstance].arrayCount = models.chartlist.count;
-        
-    // calculate all visiable line
-    NSInteger visableCount = config.painterWidth / (config.kLineWidth + config.layerToLayerGap);
-    [self topScrollView:nil startIndex:models.chartlist.count - visableCount - 1];
 }
 
 - (void)topScrollView:(DXTopScrollView *)topScroll startIndex:(NSInteger)startIndex{
@@ -92,9 +87,9 @@
     NSInteger maxIndex = [models calculateMaxVolumeIndexWithRange:range];
     DXkLineModel *maxModel = models.chartlist[maxIndex];
     config.maxVolume = maxModel.volume;
+    NSLog(@"%ld",config.maxVolume);
     // get max high min low
     maxAndHigh max = [models calculateMaxHightMinLowWithRange:range];
-    NSLog(@"%lf,%lf",max.maxHigh,max.minLow);
     config.maxHigh = max.maxHigh;
     config.minLow = max.minLow;
 //    [_painter clearMA];

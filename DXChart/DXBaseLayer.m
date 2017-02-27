@@ -18,26 +18,16 @@
     self.path = NULL;
 }
 
-- (void)setPath:(CGPathRef)path{
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    [super setPath:path];
-    [CATransaction commit];
+
+- (id<CAAction>)actionForKey:(NSString *)event{
     
-    
+    return [NSNull null];
 }
 
-- (void)setStrokeColor:(CGColorRef)strokeColor{
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    [super setStrokeColor:strokeColor];
-    [CATransaction commit];
+
+- (BOOL)drawsAsynchronously{
+    return YES;
 }
 
-- (void)setFillColor:(CGColorRef)fillColor{
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    [super setFillColor:fillColor];
-    [CATransaction commit];
-}
+
 @end

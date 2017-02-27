@@ -17,7 +17,7 @@
     self.lineWidth = config.kLineWidth;
     UIBezierPath *path = [UIBezierPath bezierPath];
     CGFloat x = i * (config.kLineWidth + config.layerToLayerGap)+ config.kLineWidth/2.;
-    [path moveToPoint:CGPointMake(x, config.painterHeight - model.height * config.painterBottomHeight + config.topMargin)];
+    [path moveToPoint:CGPointMake(x, config.painterHeight - model.height + config.topMargin)];
     [path addLineToPoint:CGPointMake(x , config.painterHeight)];
     self.strokeColor = self.fillColor = model.isPositive ? config.positiveColor.CGColor : config.negativeColor.CGColor;
     self.path = path.CGPath;

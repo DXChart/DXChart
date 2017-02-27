@@ -7,6 +7,7 @@
 //
 
 #import "DXKLinePainter.h"
+#import <mach/mach_time.h>
 
 @interface DXKLinePainter ()
 
@@ -53,12 +54,14 @@
          如果没有则每个都到数组里面去
          有的话&数量相同则取出来更新
          不同的话是否需要补足？还是直接取最大数
+         
          */
-        if (!i) [self clearMA];
-        DXVolumeLayer *volumeLayershapeLayer = self.volumeLineLayers[i]; // 需要抽离
+        if (!i) {[self clearContent];};
+
+        DXVolumeLayer *volumeLayershapeLayer = self.volumeLineLayers[i];
         [volumeLayershapeLayer setLayerWithModel:models[i] index:i];
         
-        DXKLineLayer *kLineshapeLayer = self.kLineLayers[i]; // 需要抽离
+        DXKLineLayer *kLineshapeLayer = self.kLineLayers[i];
         [kLineshapeLayer setLayerWithModel:models[i] index:i];
         
         [self.MALineLayers[0] setLayerWithModel:models[i] index:i];
@@ -102,7 +105,7 @@
         _kLineLayers = [NSMutableArray array];
         @autoreleasepool {
             // use max count
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 180; i++) {
                 DXKLineLayer *kLineshapeLayer = [DXKLineLayer layer];
                 [_kLineLayers addObject:kLineshapeLayer];
                 [self.layer addSublayer:kLineshapeLayer];
@@ -117,7 +120,7 @@
         _volumeLineLayers = [NSMutableArray array];
         @autoreleasepool {
             // use max count
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 180; i++) {
                 DXVolumeLayer *volumeShapeLayer = [DXVolumeLayer layer];
                 [_volumeLineLayers addObject:volumeShapeLayer];
                 [self.layer addSublayer:volumeShapeLayer];

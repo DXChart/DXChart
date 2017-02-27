@@ -65,6 +65,7 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
     }];
     DXkLineModel *maxModel = sortedArr1[0];
     DXkLineModel *minModel = sortedArr2[0];
+
     maxAndHigh max = {maxModel.max,minModel.min,0,0};
 
     return max;
@@ -80,8 +81,7 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
 }
 
 - (CGFloat)height{
-    if (_height) return  _height;
-    _height = getHeight(_volume, [DXkLineModelConfig sharedInstance].maxVolume);
+    _height = getHeight(_volume, [DXkLineModelConfig sharedInstance].maxVolume) * [DXkLineModelConfig sharedInstance].painterBottomHeight;
     return _height;
 }
 
@@ -114,7 +114,6 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
     if (h < i) h = i;
     if (h < j) h = j;
     if (h < k) h = k;
-    if (h < h) h = h;
     if (h < l) h = l;
     _max  = h;
     return _max;
@@ -123,7 +122,7 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
 - (CGFloat)min{
     if (_min) return _min;
     double h,i,j,k,l;
-    h = _high;
+    h = _low;
     i = _ma5;
     j = _ma10;
     k = _ma20;
@@ -131,7 +130,6 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
     if (h > i) h = i;
     if (h > j) h = j;
     if (h > k) h = k;
-    if (h > h) h = h;
     if (h > l) h = l;
     _min  = h;
     return _min;

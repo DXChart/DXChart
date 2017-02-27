@@ -34,7 +34,7 @@
     self.alpha = 0.3;
     self.delegate = self;
     self.bounces = NO;
-    self.decelerationRate = 0.2;
+    self.decelerationRate = 0.8;
     
     //pinch gesture
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(event_pinchGesture:)];

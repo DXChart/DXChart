@@ -30,7 +30,7 @@
     
     [path moveToPoint:CGPointMake(X + config.kLineWidth /2. - lineWidth / 2.,  (config.highest - model.high)/ total * config.painterTopHeight)];
     [path addLineToPoint:CGPointMake(X + config.kLineWidth / 2. - lineWidth / 2., (config.highest - model.low)/ total * config.painterTopHeight)];
-    
+//    NSLog(@"%lf,%lf,%lf",config.maxHigh - model.high,config.minLow,model.low - config.minLow);
     self.path = path.CGPath;
     self.strokeColor = self.fillColor = model.isPositive ? config.positiveColor.CGColor : config.negativeColor.CGColor;
 }

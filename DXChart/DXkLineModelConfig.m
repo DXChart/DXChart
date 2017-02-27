@@ -23,8 +23,6 @@
         config.positiveColor = [UIColor redColor];
         config.negativeColor = [UIColor greenColor];
         config.layerToLayerGap = 1;
-        config.painterTopHeight = 180;
-        config.painterBottomHeight = 60;
         config.topMargin = 2;
         config.kOriginLineWidth = 5;
         config.kLineWidth = config.kOriginLineWidth;

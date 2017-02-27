@@ -12,7 +12,7 @@
 
 @interface DXkLineModelConfig : NSObject
 
-@property (nonatomic, assign) CGFloat maxVolume; // 保存最大交易量
+@property (nonatomic, assign) NSInteger maxVolume; // 保存最大交易量
 @property (nonatomic, assign) CGFloat painterHeight; // 总的高度
 @property (nonatomic, assign) CGFloat painterTopHeight; // 上部分的高度
 @property (nonatomic, assign) CGFloat painterBottomHeight; // 下部分的高度
