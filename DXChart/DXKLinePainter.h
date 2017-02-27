@@ -10,4 +10,6 @@
 
 @interface DXKLinePainter : DXBasePainter
 
+- (void)clearMA;
+
 @end

@@ -19,4 +19,15 @@
 }
 
 
+- (id<CAAction>)actionForKey:(NSString *)event{
+    
+    return [NSNull null];
+}
+
+
+- (BOOL)drawsAsynchronously{
+    return YES;
+}
+
+
 @end

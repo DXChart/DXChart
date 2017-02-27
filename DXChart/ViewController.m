@@ -21,9 +21,11 @@
 #import "DXLayers.h"
 #import "DXKLinePainter.h"
 
-@interface ViewController ()
+@interface ViewController ()<DXTopScrollViewDelegate>
 
 @property (nonatomic, assign) CGFloat margin;
+
+@property (nonatomic, strong) DXKLinePainter *painter;
 
 @end
 
@@ -58,37 +60,41 @@
     config.painterWidth = self.view.frame.size.width - 2 *_margin;
 
     // 消除左边多余出来的 x - _width/2.
-
     CGRect paintRect = CGRectMake(_margin , 245, config.painterWidth, height + config.topMargin);
     
-    DXBasePainter *painter = [[DXBasePainter alloc] initWithFrame:paintRect];
-
+    DXKLinePainter *painter = [[DXKLinePainter alloc] initWithFrame:paintRect];
+    _painter = painter;
+    [painter addBorder];
     [self.view addSubview:painter];
 
     
     DXTopScrollView *topScroll = [[DXTopScrollView alloc]initWithFrame:paintRect];
+    topScroll.topScrollDelegate = self;
     [self.view addSubview:topScroll];
     
     //test
     [DXkLineModelArray sharedInstance].arrayCount = models.chartlist.count;
-    
-    //end
-    
-    // calculate all visiable line
-    NSInteger visableCount = config.painterWidth / (config.kLineWidth + config.layerToLayerGap);
-    
-    // get max volume
-    NSInteger maxIndex = [models calculateMaxVolumeIndexWithRange:NSMakeRange(0, visableCount)];
-    DXkLineModel *maxModel = models.chartlist[maxIndex];
-    config.maxVolume = maxModel.volume;
-    // get max high min low
-    maxAndHigh max = [models calculateMaxHightMinLowWithRange:NSMakeRange(0, visableCount)];
-    config.maxHigh = max.maxHigh;
-    config.minLow = max.minLow;
-
-    [painter reloadWithModels:[models.chartlist subarrayWithRange:NSMakeRange(0, visableCount)]];
-    
 }
 
+- (void)topScrollView:(DXTopScrollView *)topScroll startIndex:(NSInteger)startIndex{
+
+    DXkLineModelArray *models = [DXkLineModelArray sharedInstance];
+    DXkLineModelConfig *config = [DXkLineModelConfig sharedInstance];
+    // calculate all visiable line
+    NSInteger visableCount = config.painterWidth / (config.kLineWidth + config.layerToLayerGap);
+    // get max volume
+    NSRange range = NSMakeRange(startIndex, visableCount);
+    NSInteger maxIndex = [models calculateMaxVolumeIndexWithRange:range];
+    DXkLineModel *maxModel = models.chartlist[maxIndex];
+    config.maxVolume = maxModel.volume;
+    NSLog(@"%ld",config.maxVolume);
+    // get max high min low
+    maxAndHigh max = [models calculateMaxHightMinLowWithRange:range];
+    config.maxHigh = max.maxHigh;
+    config.minLow = max.minLow;
+//    [_painter clearMA];
+    [_painter reloadWithModels:[[DXkLineModelArray sharedInstance].chartlist  subarrayWithRange:NSMakeRange(startIndex, visableCount)]];
+    
+}
 
 @end

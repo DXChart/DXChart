@@ -7,6 +7,7 @@
 //
 
 #import "DXKLinePainter.h"
+#import <mach/mach_time.h>
 
 @interface DXKLinePainter ()
 
@@ -25,8 +26,8 @@
     
 }
 - (void)clearMA{
-    for (DXBaseLayer *lay in _MALineLayers) {
-        lay.path = NULL;
+    for (DXLineLayer *lay in _MALineLayers) {
+        [lay clearPath];
     }
 }
 - (void)clearKLine{
@@ -46,22 +47,21 @@
     /**
      maxCount >= kLineLayers.count >= minCount
      volumeLineLayers用上
-     */
-    [super reloadWithModels:models];
-    
-    DXkLineModelConfig *config = [DXkLineModelConfig sharedInstance];
-    
+     */    
     // add kline ,volume
     for (int i = 0 ; i < models.count; i ++) {
         /**
          如果没有则每个都到数组里面去
          有的话&数量相同则取出来更新
          不同的话是否需要补足？还是直接取最大数
+         
          */
-        DXVolumeLayer *volumeLayershapeLayer = self.volumeLineLayers[i]; // 需要抽离
+        if (!i) {[self clearContent];};
+
+        DXVolumeLayer *volumeLayershapeLayer = self.volumeLineLayers[i];
         [volumeLayershapeLayer setLayerWithModel:models[i] index:i];
         
-        DXKLineLayer *kLineshapeLayer = self.kLineLayers[i]; // 需要抽离
+        DXKLineLayer *kLineshapeLayer = self.kLineLayers[i];
         [kLineshapeLayer setLayerWithModel:models[i] index:i];
         
         [self.MALineLayers[0] setLayerWithModel:models[i] index:i];
@@ -77,17 +77,6 @@
         }
         
     }
-    
-    // add border
-    DXBorderLayer *topBorder = [DXBorderLayer layerWithFrame:CGRectMake(0, 0, config.painterWidth, config.painterTopHeight)];
-    DXBorderLayer *bottomBorder = [DXBorderLayer layerWithFrame:CGRectMake(0, config.painterBottomToTop, config.painterWidth, config.painterBottomHeight)];
-    // notice: 有顺序
-    [self.layer addSublayer:topBorder];
-    [self.layer addSublayer:bottomBorder];
-    [self.layer addSublayer:self.MALineLayers[0] ];
-    [self.layer addSublayer:self.MALineLayers[1] ];
-    [self.layer addSublayer:self.MALineLayers[2] ];
-    [self.layer addSublayer:self.MALineLayers[3] ];
 }
 
 #pragma mark - Getter & Setter
@@ -103,6 +92,10 @@
         [_MALineLayers addObject:ma10Line];
         [_MALineLayers addObject:ma20Line];
         [_MALineLayers addObject:ma30Line];
+        [self.layer addSublayer:ma5Line ];
+        [self.layer addSublayer:ma20Line ];
+        [self.layer addSublayer:ma20Line ];
+        [self.layer addSublayer:ma30Line];
     }
     return _MALineLayers;
 }
@@ -112,7 +105,7 @@
         _kLineLayers = [NSMutableArray array];
         @autoreleasepool {
             // use max count
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 180; i++) {
                 DXKLineLayer *kLineshapeLayer = [DXKLineLayer layer];
                 [_kLineLayers addObject:kLineshapeLayer];
                 [self.layer addSublayer:kLineshapeLayer];
@@ -127,7 +120,7 @@
         _volumeLineLayers = [NSMutableArray array];
         @autoreleasepool {
             // use max count
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 180; i++) {
                 DXVolumeLayer *volumeShapeLayer = [DXVolumeLayer layer];
                 [_volumeLineLayers addObject:volumeShapeLayer];
                 [self.layer addSublayer:volumeShapeLayer];

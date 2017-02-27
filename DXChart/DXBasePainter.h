@@ -18,4 +18,6 @@
 
 - (void)reloadWithModels:(NSArray<DXkLineModel *> *)models;
 
+- (void)addBorder;
+
 @end
