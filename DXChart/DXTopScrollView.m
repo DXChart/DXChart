@@ -32,6 +32,7 @@
     self.delegate = self;
     self.bounces = NO;
     self.decelerationRate = 1.0;
+    
     //pinch gesture
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(event_pinchGesture:)];
     [self addGestureRecognizer:pinch];
@@ -59,7 +60,8 @@
             self.oldOffsetX = self.contentOffset.x;
         }
         if (isLineWidthChange) {
-           
+//            NSLog(@"klineWidth : %f",[DXkLineModelConfig sharedInstance].kLineWidth);
+            
             CGFloat contentWidth = minMoveWidth * ([DXkLineModelArray sharedInstance].arrayCount - 1) + modelConfig.kLineWidth;
             
             self.contentSize = CGSizeMake(contentWidth, modelConfig.painterHeight);
@@ -67,6 +69,8 @@
             NSInteger showCount = (NSInteger)(self.frame.size.width / minMoveWidth);
             
             NSInteger startIndex = self.lastIndex - showCount;
+            NSLog(@"start %ld" , startIndex);
+            
             CGFloat contentOffX = startIndex * minMoveWidth;
             self.contentOffset = CGPointMake(contentOffX, 0);
 
@@ -78,14 +82,12 @@
     CGFloat difScale = pinch.scale - [DXkLineModelConfig sharedInstance].scale;
     CGFloat scaleBound = [DXkLineModelConfig sharedInstance].scaleBound;
     CGFloat scaleFactor = [DXkLineModelConfig sharedInstance].ScaleFactor;
-    CGFloat minMoveWidth = [DXkLineModelConfig sharedInstance].kLineWidth + [DXkLineModelConfig sharedInstance].layerToLayerGap;
+
     if (ABS(difScale) > scaleBound) {
         CGFloat newScale = difScale > 0 ? (1 + scaleFactor) : (1 - scaleFactor);
         [DXkLineModelConfig sharedInstance].scale *= newScale;
-        self.lastIndex = (NSInteger)((self.contentOffset.x + self.bounds.size.width) / minMoveWidth) - 1;
         
         [DXkLineModelConfig sharedInstance].kLineWidth = [DXkLineModelConfig sharedInstance].scale * [DXkLineModelConfig sharedInstance].kOriginLineWidth;
-       
         }
 
 }
@@ -102,6 +104,7 @@
     startIndex < 0 ? startIndex = 0 : startIndex;
     
     self.oldOffsetX = scrollView.contentOffset.x;
+    self.lastIndex = (NSInteger)((self.contentOffset.x + self.bounds.size.width) / minMoveWidth) - 1;
     NSLog(@"move %ld",startIndex);
     
     if (self.topScrollDelegate && [self.topScrollDelegate respondsToSelector:@selector(topScrollView:startIndex:)]) {
