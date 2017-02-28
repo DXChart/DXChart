@@ -48,10 +48,17 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
     _arrayCount = chartlist.count;
 }
 
-- (NSInteger)calculateMaxVolumeIndexWithRange:(NSRange)rang{
-    
-    NSArray *sortedArr = sortArray(rang, _chartlist);
-    return [_chartlist indexOfObject:sortedArr[0]];
+- (CGFloat)calculateMaxVolumeIndexWithRange:(NSRange)rang{
+    NSArray *arr = [_chartlist subarrayWithRange:rang];
+    CGFloat max = 0.0;
+    int i = 0;
+    for (DXkLineModel *model in arr) {
+        if (!i) {max = model.max;}
+        if (max < model.max) max = model.max;
+        i++;
+    }
+    ;
+    return max;
 }
 
 - (maxAndHigh)calculateMaxHightMinLowWithRange:(NSRange)rang{
@@ -59,9 +66,13 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
     NSArray *arr = [_chartlist subarrayWithRange:rang];
     
     CGFloat max = 0.0,min = 0.0;
+    
+    int i = 0;
     for (DXkLineModel *model in arr) {
+        if (!i) {max = model.max;min = model.min;}
         if (max < model.max) max = model.max;
         if (min > model.min) min = model.min;
+        i++;
     }
     maxAndHigh max1 = {max,min,0,0};
     return max1;
@@ -71,18 +82,17 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
     
     NSArray *arr = [_chartlist subarrayWithRange:rang];
     
-    NSArray *sortedArr1 = [arr sortedArrayUsingComparator:^NSComparisonResult(DXkLineModel*  _Nonnull obj1, DXkLineModel*  _Nonnull obj2) {
-        return obj1.maxMACD < obj2.maxMACD;
-    }];
-    NSArray *sortedArr2 = [arr sortedArrayUsingComparator:^NSComparisonResult(DXkLineModel*  _Nonnull obj1, DXkLineModel*  _Nonnull obj2) {
-        return obj1.minMACD > obj2.minMACD;
-    }];
-    DXkLineModel *maxModel = sortedArr1[0];
-    DXkLineModel *minModel = sortedArr2[0];
+    CGFloat max = 0.0,min = 0.0;
     
-    maxAndHigh max = {maxModel.maxMACD,minModel.minMACD,0,0};
-    
-    return max;
+    int i = 0;
+    for (DXkLineModel *model in arr) {
+        if (!i) {max = model.maxMACD;min = model.minMACD;}
+        if (max < model.maxMACD) max = model.maxMACD;
+        if (min > model.minMACD) min = model.minMACD;
+        i++;
+    }
+    maxAndHigh max1 = {max,min,0,0};
+    return max1;
 }
 
 

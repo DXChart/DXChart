@@ -20,6 +20,7 @@
 #import "DXTopScrollView.h"
 #import "DXLayers.h"
 #import "DXKLinePainter.h"
+#import <mach/mach_time.h>
 
 @interface ViewController ()<DXTopScrollViewDelegate>
 
@@ -60,7 +61,7 @@
     config.painterWidth = self.view.frame.size.width - 2 *_margin;
 
     // 消除左边多余出来的 x - _width/2.
-    CGRect paintRect = CGRectMake(_margin , 100, config.painterWidth, height + config.topMargin);
+    CGRect paintRect = CGRectMake(_margin , 255, config.painterWidth, height + config.topMargin);
     
     DXKLinePainter *painter = [[DXKLinePainter alloc] initWithFrame:paintRect];
     _painter = painter;
@@ -85,10 +86,10 @@
     // get max volume
     NSRange range = NSMakeRange(startIndex, visableCount);
     if ((startIndex + visableCount) > [DXkLineModelArray sharedInstance].chartlist.count) return;
-    // time consuming 0.1~0.7 ms 
-    NSInteger maxIndex = [models calculateMaxVolumeIndexWithRange:range];
-    DXkLineModel *maxModel = models.chartlist[maxIndex];
-    config.maxVolume = maxModel.volume;
+    // time consuming 0.13 ms
+    uint64_t start = mach_absolute_time();
+    CGFloat maxVolume = [models calculateMaxVolumeIndexWithRange:range];
+    config.maxVolume = maxVolume;
     // get max high min low
     maxAndHigh max = [models calculateMaxHightMinLowWithRange:range];
     config.maxHigh = max.maxHigh;
@@ -96,6 +97,16 @@
     maxAndHigh maxMACD = [models calculateMaxAndMinMACDWithRange:range];
     config.macdHighest = maxMACD.maxHigh;
     config.macdLowest = maxMACD.minLow;
+    uint64_t end = mach_absolute_time();
+    uint64_t elapsed = end - start;mach_timebase_info_data_t info;
+    if (mach_timebase_info (&info) != KERN_SUCCESS)
+    {
+        printf ("mach_timebase_info failed\n");
+    }
+    uint64_t nanosecs = elapsed * info.numer / info.denom;
+    double millisecs = (double)nanosecs / 1000000;
+    NSLog(@">>>>>>>>>>cost time = %.3lf ms", millisecs);
+    
     [_painter reloadWithModels:[[DXkLineModelArray sharedInstance].chartlist  subarrayWithRange:NSMakeRange(startIndex, visableCount)]];
     
 }

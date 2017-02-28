@@ -26,7 +26,7 @@
         [path moveToPoint:CGPointMake(x , zeroLevelY)];
         [path addLineToPoint:CGPointMake(x,zeroLevelY + ( - difdea / (config.macdHighest - config.macdLowest)) * config.painterBottomHeight )];
     }
-    NSLog(@"%lf,%lf,%lf,%lf,%lf",config.macdHighest ,config.macdLowest,model.dif,model.dea,difdea);
+//    NSLog(@"%lf,%lf,%lf,%lf,%lf",config.macdHighest ,config.macdLowest,model.dif,model.dea,difdea);
     self.strokeColor = self.fillColor = model.isPositiveMACD > 0 ? config.positiveColor.CGColor : config.negativeColor.CGColor;
     self.path = path.CGPath;
 }
