@@ -13,6 +13,7 @@
 
 @interface DXBasePainter : UIView
 
+@property (nonatomic) DXChartType chartType;
 
 - (void)clearContent;
 

@@ -16,7 +16,7 @@
 @property (nonatomic, strong) NSMutableArray<DXLineLayer *> *MALineLayers;
 @property (nonatomic, strong) NSMutableArray<DXMACDLayer *> *macdColLineLayers;
 @property (nonatomic, strong) NSMutableArray<DXLineLayer *> *macdLineLayers;
-
+@property (nonatomic, strong) NSMutableArray<UILabel *> *kLineLabels;
 @end
 
 @implementation DXKLinePainter
@@ -26,7 +26,6 @@
     [self clearKLine];
     [self clearVolume];
     [self clearMACD];
-    
 }
 - (void)clearMA{
     for (DXLineLayer *lay in _MALineLayers) {
@@ -53,8 +52,6 @@
     }
 }
 
-
-
 - (void)reloadWithModels:(NSArray<DXkLineModel *> *)models{
 #pragma warning - 这个地方需要确定下是否需要已有kLineLayers，伪代码
     /**
@@ -69,39 +66,103 @@
          不同的话是否需要补足？还是直接取最大数
          
          */
-        if (!i) {[self clearContent];};//DXMACDLayer
-// volume line
-//        DXVolumeLayer *volumeLayershapeLayer = self.volumeLineLayers[i];
-//        [volumeLayershapeLayer setLayerWithModel:models[i] index:i];
+        if (!i) {[self clearContent];};
+        // volume line
+        if (self.chartType & DXChartTypeVolume){
+            DXVolumeLayer *volumeLayershapeLayer = self.volumeLineLayers[i];
+            [volumeLayershapeLayer setLayerWithModel:models[i] index:i];
+        }
+
         // macd
-        DXMACDLayer *macdLayer = self.macdColLineLayers[i];
-        [macdLayer setLayerWithModel:models[i] index:i];
+        if (self.chartType & DXChartTypeMACD){
+            DXMACDLayer *macdLayer = self.macdColLineLayers[i];
+            [macdLayer setLayerWithModel:models[i] index:i];
+        }
         
-        DXKLineLayer *kLineshapeLayer = self.kLineLayers[i];
-        [kLineshapeLayer setLayerWithModel:models[i] index:i];
+        // kLine
+        if (self.chartType & DXChartTypeKline) {
+            DXKLineLayer *kLineshapeLayer = self.kLineLayers[i];
+            [kLineshapeLayer setLayerWithModel:models[i] index:i];
+        }
         
         // MA
-        [self.MALineLayers[0] setLayerWithModel:models[i] index:i];
-        [self.MALineLayers[1] setLayerWithModel:models[i] index:i];
-        [self.MALineLayers[2] setLayerWithModel:models[i] index:i];
-        [self.MALineLayers[3] setLayerWithModel:models[i] index:i];
+        if (self.chartType & DXChartTypeMA) {
+            [self.MALineLayers[0] setLayerWithModel:models[i] index:i];
+            [self.MALineLayers[1] setLayerWithModel:models[i] index:i];
+            [self.MALineLayers[2] setLayerWithModel:models[i] index:i];
+            [self.MALineLayers[3] setLayerWithModel:models[i] index:i];
+        }
+        
         // MACD Line
-        [self.macdLineLayers[0] setLayerWithModel:models[i] index:i];
-        [self.macdLineLayers[1] setLayerWithModel:models[i] index:i];
+        if (self.chartType & DXChartTypeMACD) {
+            [self.macdLineLayers[0] setLayerWithModel:models[i] index:i];
+            [self.macdLineLayers[1] setLayerWithModel:models[i] index:i];
+        }
+        
         
         if (i == (models.count - 1)){
-            [self.MALineLayers[0] finishDrawPath];
-            [self.MALineLayers[1] finishDrawPath];
-            [self.MALineLayers[2] finishDrawPath];
-            [self.MALineLayers[3] finishDrawPath];
-            [self.macdLineLayers[0] finishDrawPath];
-            [self.macdLineLayers[1] finishDrawPath];
+            // MA
+            if (self.chartType & DXChartTypeMA) {
+                [self.MALineLayers[0] finishDrawPath];
+                [self.MALineLayers[1] finishDrawPath];
+                [self.MALineLayers[2] finishDrawPath];
+                [self.MALineLayers[3] finishDrawPath];
+            }
+            // MACD Line
+            if (self.chartType & DXChartTypeMACD) {
+                [self.macdLineLayers[0] finishDrawPath];
+                [self.macdLineLayers[1] finishDrawPath];
+            }
         }
         
     }
 }
 
+
+- (void)addBorder{
+    // 后期可能需要更具chartType来更换
+    DXkLineModelConfig *config = [DXkLineModelConfig sharedInstance];
+    // add dash
+    DXDashLayer *dashLayer1 = [DXDashLayer layerWithStartPoint:CGPointMake(0, config.painterTopHeight / 4.) endPoint:CGPointMake(config.painterWidth, config.painterTopHeight / 4.)];
+    DXBaseLayer *midLineLayer = [DXBaseLayer layer];
+    midLineLayer.frame = CGRectMake(0, config.painterTopHeight / 2., config.painterWidth, 0.5);
+    midLineLayer.backgroundColor = [UIColor lightGrayColor].CGColor;
+    DXDashLayer *dashLayer2 = [DXDashLayer layerWithStartPoint:CGPointMake(0, config.painterTopHeight / 4. * 3.) endPoint:CGPointMake(config.painterWidth, config.painterTopHeight / 4. * 3.)];
+    DXDashLayer *dashLayer3 = [DXDashLayer layerWithStartPoint:CGPointMake(0, config.painterTopHeight / 4. * 5. + config.painterMidGap) endPoint:CGPointMake(config.painterWidth, config.painterTopHeight / 4. * 5. + config.painterMidGap)];
+    // add border
+    DXBorderLayer *topBorder = [DXBorderLayer layerWithFrame:CGRectMake(0, 0, config.painterWidth, config.painterTopHeight)];
+    DXBorderLayer *bottomBorder = [DXBorderLayer layerWithFrame:CGRectMake(0, config.painterBottomToTop, config.painterWidth, config.painterBottomHeight)];
+    // notice: 有顺序
+    [self.layer addSublayer:topBorder];
+    [self.layer addSublayer:bottomBorder];
+    [self.layer addSublayer:dashLayer1];
+    [self.layer addSublayer:dashLayer2];
+    [self.layer addSublayer:midLineLayer];
+    [self.layer addSublayer:dashLayer3];
+}
+
 #pragma mark - Getter & Setter
+// 后期有可能更换成 CATextLayer
+- (NSMutableArray<UILabel *> *)kLineLabels{
+    if (!_kLineLabels){
+        _kLineLabels = [NSMutableArray array];
+        CGFloat labelHeight = 10;
+        DXkLineModelConfig *config = [DXkLineModelConfig sharedInstance];
+        for (int i = 0; i < 5; i ++) {
+            UILabel *label  = [[UILabel alloc] init];
+            label.hidden = YES;
+            label.textColor = [UIColor lightGrayColor];
+            label.font = [UIFont systemFontOfSize:9.];
+            CGFloat Y = (config.painterTopHeight - labelHeight) / 4. * i;
+            if (i == 1) Y -= 2;
+            if (i == 3) Y += 2;
+            label.frame = CGRectMake(1, Y, 30, labelHeight);
+            [self addSubview:label];
+            [_kLineLabels addObject:label];
+        }
+    }
+    return _kLineLabels;
+}
 
 - (NSMutableArray<DXLineLayer *> *)MALineLayers{
     if (!_MALineLayers) {
@@ -173,17 +234,13 @@
 - (NSMutableArray<DXLineLayer *> *)macdLineLayers{
     if (!_macdLineLayers) {
         _macdLineLayers = [NSMutableArray array];
-        @autoreleasepool {
-            // use max count
-            for (int i = 0; i < 180; i++) {
-                DXLineLayer *difLine = [DXLineLayer layerWithType:DXLineTypeDIF];
-                DXLineLayer *deaLine = [DXLineLayer layerWithType:DXLineTypeDEA];
-                [_macdLineLayers addObject:difLine];
-                [_macdLineLayers addObject:deaLine];
-                [self.layer addSublayer:difLine];
-                [self.layer addSublayer:deaLine];
-            }
-        }
+        // use max count
+        DXLineLayer *difLine = [DXLineLayer layerWithType:DXLineTypeDIF];
+        DXLineLayer *deaLine = [DXLineLayer layerWithType:DXLineTypeDEA];
+        [_macdLineLayers addObject:difLine];
+        [_macdLineLayers addObject:deaLine];
+        [self.layer addSublayer:difLine];
+        [self.layer addSublayer:deaLine];
     }
     return _macdLineLayers;
 }

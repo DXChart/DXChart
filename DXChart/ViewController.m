@@ -15,12 +15,14 @@
 #import "DXLayers.h"
 #import "DXKLinePainter.h"
 #import <mach/mach_time.h>
+#import "DXQuotaPainter.h"
 
 @interface ViewController ()<DXTopScrollViewDelegate>
 
 @property (nonatomic, assign) CGFloat margin;
 
 @property (nonatomic, strong) DXKLinePainter *painter;
+@property (nonatomic, strong) DXQuotaPainter *quotaPainter;
 
 @end
 
@@ -37,9 +39,11 @@
 //    NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
 //    [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
     [self initial];
+    self.view.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 - (void)initial{
+    
     // fetch data
     DXkLineModelArray *models = [DXkLineModelArray sharedInstance];
     // normal
@@ -57,22 +61,27 @@
     // 消除左边多余出来的 x - _width/2.
 
     CGRect paintRect = CGRectMake(_margin , 255, config.painterWidth, height + config.topMargin);
-    
     DXKLinePainter *painter = [[DXKLinePainter alloc] initWithFrame:paintRect];
     _painter = painter;
     [painter addBorder];
     [self.view addSubview:painter];
     
+    DXQuotaPainter *quotaPainter = [[DXQuotaPainter alloc] initWithFrame:CGRectMake(_margin , 245, config.painterWidth, height + config.topMargin + 10)];
+    quotaPainter.chartType = painter.chartType = DXChartTypeKline | DXChartTypeMA | DXChartTypeVolume;
+    _quotaPainter = quotaPainter;
+    [self.view addSubview:quotaPainter];
+    
+
+    
     DXTopScrollView *topScroll = [[DXTopScrollView alloc]initWithFrame:paintRect];
     topScroll.topScrollDelegate = self;
     [self.view addSubview:topScroll];
-    
     //test
     [DXkLineModelArray sharedInstance].arrayCount = models.chartlist.count;
 }
 
 - (void)topScrollView:(DXTopScrollView *)topScroll startIndex:(NSInteger)startIndex{
-
+    NSLog(@"index %ld",startIndex);
     DXkLineModelArray *models = [DXkLineModelArray sharedInstance];
     DXkLineModelConfig *config = [DXkLineModelConfig sharedInstance];
     // calculate all visiable line
@@ -90,7 +99,7 @@
     maxAndHigh maxMACD = [models calculateMaxAndMinMACDWithRange:range];
     config.macdHighest = maxMACD.maxHigh;
     config.macdLowest = maxMACD.minLow;
-
+    [_quotaPainter reloadWithModels:[[DXkLineModelArray sharedInstance].chartlist  subarrayWithRange:NSMakeRange(startIndex, visableCount)]];
     [_painter reloadWithModels:[[DXkLineModelArray sharedInstance].chartlist  subarrayWithRange:NSMakeRange(startIndex, visableCount)]];
     
 }
