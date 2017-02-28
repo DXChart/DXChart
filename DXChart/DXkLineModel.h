@@ -34,7 +34,7 @@ typedef NS_ENUM(NSUInteger, DXLineType) {
 @property (nonatomic, strong) NSArray<DXkLineModel *> * chartlist;
 @property (nonatomic, assign) BOOL success;
 // caculator max volume
-- (NSInteger)calculateMaxVolumeIndexWithRange:(NSRange)rang;
+- (CGFloat)calculateMaxVolumeIndexWithRange:(NSRange)rang;
 // kLine(MA) max and min
 - (maxAndHigh)calculateMaxHightMinLowWithRange:(NSRange)rang;
 // MACD DIF DEA (DIF - DEA)

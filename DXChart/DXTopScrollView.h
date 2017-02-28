@@ -18,6 +18,8 @@
  */
 - (void) topScrollView:(DXTopScrollView *)topScroll startIndex:(NSInteger)startIndex;
 
+- (void) topScrollView:(DXTopScrollView *)topScroll tapIndex:(NSInteger)tapIndex YPosition:(CGFloat)YPosition;
+
 @end
 
 @interface DXTopScrollView : UIScrollView

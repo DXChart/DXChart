@@ -25,7 +25,7 @@
     if (self = [super initWithFrame:frame]) {
         [self private_setupUI];
         [self private_setKVO];
-        
+        [self private_setGesture];
     }
     return self;
 }
@@ -37,10 +37,17 @@
     self.decelerationRate = 0.8;
     self.showsHorizontalScrollIndicator = NO;
     self.showsVerticalScrollIndicator = NO;
+}
 
+- (void)private_setGesture{
     //pinch gesture
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(event_pinchGesture:)];
     [self addGestureRecognizer:pinch];
+    
+    //tap gesture
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(event_tapGesture:)];
+    [self addGestureRecognizer:tap];
+    
 }
 
 - (void)private_setKVO{
@@ -56,7 +63,6 @@
     self.contentSize = CGSizeMake(contentWidth, [DXkLineModelConfig sharedInstance]. painterHeight);
 
 }
-
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
     if ([object isKindOfClass: [DXkLineModelConfig class]] || [object isKindOfClass:[DXkLineModelArray class]]) {
@@ -99,6 +105,11 @@
     }
     [DXkLineModelConfig sharedInstance].kLineWidth = lineWidth;
 
+}
+
+- (void)event_tapGesture:(UITapGestureRecognizer *) tap{
+    CGPoint tapPoint = [tap locationInView:self];
+    
 }
 
 - (void)private_handlePich{
