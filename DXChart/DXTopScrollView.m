@@ -31,11 +31,13 @@
 }
 
 - (void)private_setupUI{
+    self.backgroundColor = [UIColor colorWithWhite:1 alpha:0];
     self.delegate = self;
     self.bounces = NO;
     self.decelerationRate = 0.8;
     self.showsHorizontalScrollIndicator = NO;
     self.showsVerticalScrollIndicator = NO;
+
     //pinch gesture
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(event_pinchGesture:)];
     [self addGestureRecognizer:pinch];

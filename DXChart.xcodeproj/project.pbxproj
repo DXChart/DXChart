@@ -29,6 +29,7 @@
 		BD3A99FA1E5FCE530089104B /* DXLineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD3A99F91E5FCE530089104B /* DXLineLayer.m */; };
 		BD3A99FC1E5FFD310089104B /* timeLineForDay.json in Resources */ = {isa = PBXBuildFile; fileRef = BD3A99FB1E5FFD310089104B /* timeLineForDay.json */; };
 		BD3A9A021E6023A10089104B /* DXKLinePainter.m in Sources */ = {isa = PBXBuildFile; fileRef = BD3A9A011E6023A10089104B /* DXKLinePainter.m */; };
+		BD3A9A081E6424760089104B /* DXMACDLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD3A9A071E6424760089104B /* DXMACDLayer.m */; };
 		F8BA3AC07E2D4D31505C447E /* Pods_DXChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F1AD06B87F5252028321870 /* Pods_DXChart.framework */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +87,8 @@
 		BD3A99FF1E5FFF740089104B /* DXLayers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DXLayers.h; sourceTree = "<group>"; };
 		BD3A9A001E6023A10089104B /* DXKLinePainter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXKLinePainter.h; sourceTree = "<group>"; };
 		BD3A9A011E6023A10089104B /* DXKLinePainter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXKLinePainter.m; sourceTree = "<group>"; };
+		BD3A9A061E6424760089104B /* DXMACDLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXMACDLayer.h; sourceTree = "<group>"; };
+		BD3A9A071E6424760089104B /* DXMACDLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXMACDLayer.m; sourceTree = "<group>"; };
 		FBD6B90E5D1431F28D17CE04 /* Pods-DXChart.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DXChart.release.xcconfig"; path = "Pods/Target Support Files/Pods-DXChart/Pods-DXChart.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -162,11 +165,6 @@
 		BD3A99B71E5E76A60089104B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				BD3A99C01E5E76A60089104B /* Main.storyboard */,
-				BD3A99C31E5E76A60089104B /* Assets.xcassets */,
-				BD3A99C51E5E76A60089104B /* LaunchScreen.storyboard */,
-				BD3A99C81E5E76A60089104B /* Info.plist */,
-				BD3A99D31E5E770A0089104B /* kLineForDay.json */,
 				BD3A99B81E5E76A60089104B /* main.m */,
 			);
 			name = "Supporting Files";
@@ -197,6 +195,8 @@
 				BD3A99F01E5EC1440089104B /* DXDashLayer.m */,
 				BD3A99F81E5FCE530089104B /* DXLineLayer.h */,
 				BD3A99F91E5FCE530089104B /* DXLineLayer.m */,
+				BD3A9A061E6424760089104B /* DXMACDLayer.h */,
+				BD3A9A071E6424760089104B /* DXMACDLayer.m */,
 				BD3A99FF1E5FFF740089104B /* DXLayers.h */,
 			);
 			name = BaseLayer;
@@ -371,6 +371,7 @@
 				BD3A99EE1E5EB6010089104B /* DXKLineLayer.m in Sources */,
 				BD3A99BF1E5E76A60089104B /* ViewController.m in Sources */,
 				BD3A99F71E5FC4670089104B /* DXVolumeLayer.m in Sources */,
+				BD3A9A081E6424760089104B /* DXMACDLayer.m in Sources */,
 				BD3A99BC1E5E76A60089104B /* AppDelegate.m in Sources */,
 				BD3A99B91E5E76A60089104B /* main.m in Sources */,
 				BD3A99F11E5EC1440089104B /* DXDashLayer.m in Sources */,
