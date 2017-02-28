@@ -58,19 +58,13 @@ static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
     
     NSArray *arr = [_chartlist subarrayWithRange:rang];
     
-    NSArray *sortedArr1 = [arr sortedArrayUsingComparator:^NSComparisonResult(DXkLineModel*  _Nonnull obj1, DXkLineModel*  _Nonnull obj2) {
-        return obj1.max < obj2.max;
-    }];
-    NSArray *sortedArr2 = [arr sortedArrayUsingComparator:^NSComparisonResult(DXkLineModel*  _Nonnull obj1, DXkLineModel*  _Nonnull obj2) {
-        return obj1.min > obj2.min;
-    }];
-    
-    DXkLineModel *maxModel = sortedArr1[0];
-    DXkLineModel *minModel = sortedArr2[0];
-
-    maxAndHigh max = {maxModel.max,minModel.min,0,0};
-
-    return max;
+    CGFloat max = 0.0,min = 0.0;
+    for (DXkLineModel *model in arr) {
+        if (max < model.max) max = model.max;
+        if (min > model.min) min = model.min;
+    }
+    maxAndHigh max1 = {max,min,0,0};
+    return max1;
 }
 
 - (maxAndHigh)calculateMaxAndMinMACDWithRange:(NSRange)rang{

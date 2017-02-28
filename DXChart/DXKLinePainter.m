@@ -48,8 +48,8 @@
     for (DXBaseLayer *lay in _macdColLineLayers) {
         lay.path = NULL;
     }
-    for (DXBaseLayer * lay in _macdLineLayers) {
-        lay.path = NULL;
+    for (DXLineLayer * lay in _macdLineLayers) {
+        [lay clearPath];
     }
 }
 
