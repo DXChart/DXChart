@@ -17,7 +17,6 @@
 		BD3A99D21E5E76DC0089104B /* DXBaseLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD3A99D11E5E76DC0089104B /* DXBaseLayer.m */; };
 		BD3A99D41E5E770A0089104B /* kLineForDay.json in Resources */ = {isa = PBXBuildFile; fileRef = BD3A99D31E5E770A0089104B /* kLineForDay.json */; };
 		BD3A99D81E5E7A450089104B /* DXkLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BD3A99D71E5E7A450089104B /* DXkLineModel.m */; };
-		BD3A99DC1E5E7FB20089104B /* YYModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD3A99DB1E5E7FB20089104B /* YYModel.framework */; };
 		BD3A99E31E5E88C30089104B /* DXBasePainter.m in Sources */ = {isa = PBXBuildFile; fileRef = BD3A99E21E5E88C30089104B /* DXBasePainter.m */; };
 		BD3A99E61E5E905D0089104B /* DXkLineModelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BD3A99E51E5E905D0089104B /* DXkLineModelConfig.m */; };
 		BD3A99EB1E5EAFC40089104B /* DXBorderLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD3A99EA1E5EAFC40089104B /* DXBorderLayer.m */; };
@@ -81,7 +80,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD3A99DC1E5E7FB20089104B /* YYModel.framework in Frameworks */,
 				F8BA3AC07E2D4D31505C447E /* Pods_DXChart.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,6 +94,13 @@
 				FBD6B90E5D1431F28D17CE04 /* Pods-DXChart.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		234C72081E65476A005E2C1A /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Tools;
 			sourceTree = "<group>";
 		};
 		236F0F671E5FFDA6004D0748 /* ScrollView */ = {
@@ -128,6 +133,7 @@
 		BD3A99B61E5E76A60089104B /* DXChart */ = {
 			isa = PBXGroup;
 			children = (
+				234C72081E65476A005E2C1A /* Tools */,
 				BD3A99D51E5E7A280089104B /* Model */,
 				BD3A99CE1E5E76AD0089104B /* View */,
 				BD3A99BA1E5E76A60089104B /* AppDelegate.h */,
@@ -158,12 +164,12 @@
 			children = (
 				236F0F671E5FFDA6004D0748 /* ScrollView */,
 				BD3A99E01E5E889D0089104B /* Painter */,
-				BD3A99CF1E5E76BA0089104B /* BaseLaye */,
+				BD3A99CF1E5E76BA0089104B /* BaseLayer */,
 			);
 			name = View;
 			sourceTree = "<group>";
 		};
-		BD3A99CF1E5E76BA0089104B /* BaseLaye */ = {
+		BD3A99CF1E5E76BA0089104B /* BaseLayer */ = {
 			isa = PBXGroup;
 			children = (
 				BD3A99E91E5EAFC40089104B /* DXBorderLayer.h */,
@@ -182,7 +188,7 @@
 				BD3A9A071E6424760089104B /* DXMACDLayer.m */,
 				BD3A99FF1E5FFF740089104B /* DXLayers.h */,
 			);
-			name = BaseLaye;
+			name = BaseLayer;
 			sourceTree = "<group>";
 		};
 		BD3A99D51E5E7A280089104B /* Model */ = {
@@ -252,7 +258,6 @@
 				TargetAttributes = {
 					BD3A99B31E5E76A60089104B = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = VV6VK423TA;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -477,13 +482,13 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = VV6VK423TA;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)";
 				INFOPLIST_FILE = DXChart/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_CODE_SIGN_FLAGS = "--deep";
-				PRODUCT_BUNDLE_IDENTIFIER = jing.cai.DXChart;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Jingcaich.DXChart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -494,13 +499,13 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = VV6VK423TA;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)";
 				INFOPLIST_FILE = DXChart/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_CODE_SIGN_FLAGS = "--deep";
-				PRODUCT_BUNDLE_IDENTIFIER = jing.cai.DXChart;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Jingcaich.DXChart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

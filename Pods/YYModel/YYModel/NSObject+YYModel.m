@@ -1617,7 +1617,7 @@ static NSString *ModelDescription(NSObject *model) {
                         if (value) {
                             [one setValue:value forKey:propertyMeta->_name];
                         }
-                    } @catch (NSException *exception) {}
+                    } @catch (NSError *exception) {}
                 } // break; commented for code coverage in next line
                 default: break;
             }
@@ -1672,7 +1672,7 @@ static NSString *ModelDescription(NSObject *model) {
                         @try {
                             NSValue *value = [self valueForKey:NSStringFromSelector(propertyMeta->_getter)];
                             [aCoder encodeObject:value forKey:propertyMeta->_name];
-                        } @catch (NSException *exception) {}
+                        } @catch (NSError *exception) {}
                     }
                 } break;
                     
@@ -1718,7 +1718,7 @@ static NSString *ModelDescription(NSObject *model) {
                         @try {
                             NSValue *value = [aDecoder decodeObjectForKey:propertyMeta->_name];
                             if (value) [self setValue:value forKey:propertyMeta->_name];
-                        } @catch (NSException *exception) {}
+                        } @catch (NSError *exception) {}
                     }
                 } break;
                     

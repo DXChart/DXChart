@@ -11,12 +11,6 @@
 #import "YYModel.h"
 #import "DXBasePainter.h"
 #import "DXkLineModelConfig.h"
-#import "DXBaseLayer.h"
-#import "DXBorderLayer.h"
-#import "DXKLineLayer.h"
-#import "DXDashLayer.h"
-#import "DXVolumeLayer.h"
-#import "DXLineLayer.h"
 #import "DXTopScrollView.h"
 #import "DXLayers.h"
 #import "DXKLinePainter.h"
@@ -86,8 +80,7 @@
     // get max volume
     NSRange range = NSMakeRange(startIndex, visableCount);
     if ((startIndex + visableCount) > [DXkLineModelArray sharedInstance].chartlist.count) return;
-    // time consuming 0.13 ms
-    uint64_t start = mach_absolute_time();
+    // time consuming 0.01~0.05 ms ,可以无视
     CGFloat maxVolume = [models calculateMaxVolumeIndexWithRange:range];
     config.maxVolume = maxVolume;
     // get max high min low
@@ -97,16 +90,7 @@
     maxAndHigh maxMACD = [models calculateMaxAndMinMACDWithRange:range];
     config.macdHighest = maxMACD.maxHigh;
     config.macdLowest = maxMACD.minLow;
-    uint64_t end = mach_absolute_time();
-    uint64_t elapsed = end - start;mach_timebase_info_data_t info;
-    if (mach_timebase_info (&info) != KERN_SUCCESS)
-    {
-        printf ("mach_timebase_info failed\n");
-    }
-    uint64_t nanosecs = elapsed * info.numer / info.denom;
-    double millisecs = (double)nanosecs / 1000000;
-//    NSLog(@">>>>>>>>>>cost time = %.3lf ms", millisecs);
-    
+
     [_painter reloadWithModels:[[DXkLineModelArray sharedInstance].chartlist  subarrayWithRange:NSMakeRange(startIndex, visableCount)]];
     
 }
