@@ -25,7 +25,12 @@ typedef NS_ENUM(NSUInteger, DXLineType) {
     DXLineTypeMA30,
     DXLineTypeDIF,
     DXLineTypeDEA
-    
+};
+typedef NS_OPTIONS(NSUInteger, DXChartType) {
+    DXChartTypeVolume = 1 << 0,
+    DXChartTypeMACD = 1 << 1,
+    DXChartTypeMA = 1 << 2,
+    DXChartTypeKline = 1 << 3
 };
 
 @interface DXkLineModelArray : NSObject<YYModel>

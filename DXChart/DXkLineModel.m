@@ -44,8 +44,8 @@ static force_inline CGFloat getHeight(CGFloat volume, CGFloat maxVolume) {
     CGFloat max = 0.0;
     int i = 0;
     for (DXkLineModel *model in arr) {
-        if (!i) {max = model.max;}
-        if (max < model.max) max = model.max;
+        if (!i) {max = model.volume;}
+        if (max < model.volume) max = model.volume;
         i++;
     }
     ;
