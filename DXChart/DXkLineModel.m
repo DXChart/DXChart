@@ -15,15 +15,6 @@ static force_inline CGFloat getHeight(CGFloat volume, CGFloat maxVolume) {
     return (CGFloat)volume / maxVolume;
 }
 
-static force_inline NSArray * sortArray(NSRange rang,NSArray *chartList) {
-    NSArray *arr = [chartList subarrayWithRange:rang];
-    
-    NSArray *sortedArr = [arr sortedArrayUsingComparator:^NSComparisonResult(DXkLineModel*  _Nonnull obj1, DXkLineModel*  _Nonnull obj2) {
-        return obj1.volume < obj2.volume;
-    }];
-    return sortedArr;
-}
-
 @implementation DXkLineModelArray
 
 + (instancetype)sharedInstance{
