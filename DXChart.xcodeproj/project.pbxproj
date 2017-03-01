@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-
 		0619083F2CCB9456C51E52DC46B90C59 /* DXTopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD9D24766CF92574A62853E6533E162 /* DXTopScrollView.m */; };
 		0A478E1499900C15A9EF86A68A45D2B3 /* DXKLineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E23A250C1F41705F762AEB960B9502BC /* DXKLineLayer.m */; };
 		16DACB662D66F2F660098ED84361A02B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28F12188D30517B531D3B803F81A75E8 /* Assets.xcassets */; };
@@ -58,7 +57,6 @@
 		739595D670B3018507A2667363356990 /* DXBorderLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXBorderLayer.m; sourceTree = "<group>"; };
 		7835B2702412D6620AB08D82EE5050A0 /* DXBasePainter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXBasePainter.m; sourceTree = "<group>"; };
 		7B7970A3FE600C69F78FD6D2F45F63A9 /* DXkLineModelConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXkLineModelConfig.h; sourceTree = "<group>"; };
-		813E68382A01D196F9095E57AA751426 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8C6EEBE02AB9A009501AF0A79ACBE97B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		97C4C14C288E7620A7A36B653411E44C /* DXBaseLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXBaseLayer.m; sourceTree = "<group>"; };
 		A19E6EBCBA9429EB8C9336BA60E7A736 /* DXDashLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXDashLayer.h; sourceTree = "<group>"; };
@@ -85,7 +83,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
 				7C77F8EA2D6415DF12F1D449CB4C96AE /* Pods_DXChart.framework in Frameworks */,
 				E10EED256284B14133064F997BEFB581 /* YYModel.framework in Frameworks */,
 			);
@@ -100,24 +97,6 @@
 				E6F4A3389F0C0BF868834413E696F5C7 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		234C72081E65476A005E2C1A /* Tools */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Tools;
-			sourceTree = "<group>";
-		};
-		236F0F671E5FFDA6004D0748 /* ScrollView */ = {
-
-			isa = PBXGroup;
-			children = (
-				D7A6B029D48209D9793750F33825D517 /* Pods_DXChart.framework */,
-				813E68382A01D196F9095E57AA751426 /* UIKit.framework */,
-				BE030D3EE78EEBF89E143386F0A5D684 /* YYModel.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		28336EA41CAC49348C56117619EA5590 /* Model */ = {
@@ -143,7 +122,6 @@
 		42F03D1D24294359D727587D4AF2C313 /* DXChart */ = {
 			isa = PBXGroup;
 			children = (
-
 				28336EA41CAC49348C56117619EA5590 /* Model */,
 				0F120097DA9F8ED195E5E62B67BB8DA0 /* Supporting Files */,
 				B800D0CBD85BF1CE4AD6D9FD8CDCFFCF /* View */,
@@ -205,7 +183,6 @@
 			isa = PBXGroup;
 			children = (
 				42F03D1D24294359D727587D4AF2C313 /* DXChart */,
-				164C6F0657DF1E84C6EC4B7BAD737F77 /* Frameworks */,
 				3F5F0409A9BC86413A5B21D35718FA52 /* Pods */,
 				B7EC9B789E02ABD5BD4679792CABD1A3 /* Products */,
 			);
@@ -406,7 +383,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2Y6HLW3C4U;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)";
 				INFOPLIST_FILE = DXChart/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
@@ -423,7 +400,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 2Y6HLW3C4U;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)";
 				INFOPLIST_FILE = DXChart/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
@@ -518,7 +495,6 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-
 			};
 			name = Debug;
 		};

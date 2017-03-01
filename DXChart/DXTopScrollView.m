@@ -22,6 +22,8 @@
 @property (nonatomic,strong) NSTimer *crossTimer;
 
 @property (nonatomic,assign) BOOL isShowCross;
+///上一次长按的Y坐标
+@property (nonatomic,assign) CGFloat lastPressY;
 
 @end
 
@@ -29,7 +31,8 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
-        _crossInterval = 3;
+        _crossInterval = 2;
+        _lastPressY = [DXkLineModelConfig sharedInstance].painterTopHeight;
         [self private_setupUI];
         [self private_setKVO];
         [self private_setGesture];
@@ -115,16 +118,36 @@
 #pragma mark - crossGesture
 - (void)event_crossGesture:(UILongPressGestureRecognizer *) crossGesture{
     CGPoint crossPoint = [crossGesture locationInView:self];
+    BOOL isValid = [self isValidEvent:crossPoint];
     NSInteger crossIndex = [self private_getRoundFromPoint:crossPoint];
     
     [self private_timerInvalidate];
     self.isShowCross = YES;
     if (crossGesture.state == UIGestureRecognizerStateChanged){
+        CGFloat positionY = crossPoint.y;
+        //处理Y轴情况
+        if (!isValid) {
+            positionY = self.lastPressY;
+        }
+        self.lastPressY = positionY;
+        //越界判断
+        if (positionY < 0) {
+            positionY = 0;
+        }else if(positionY > [DXkLineModelConfig sharedInstance].painterHeight){
+            positionY = [DXkLineModelConfig sharedInstance].painterHeight;
+        }
+//         NSLog(@"positionY %f",positionY);
+        
         if (self.topScrollDelegate && [self.topScrollDelegate respondsToSelector:@selector(topScrollView:tapIndex:YPosition:)]) {
-            [self.topScrollDelegate topScrollView:self tapIndex:crossIndex YPosition:crossPoint.y];
+            [self.topScrollDelegate topScrollView:self tapIndex:crossIndex YPosition:positionY];
         }
         
     }else if(crossGesture.state == UIGestureRecognizerStateBegan){
+        
+        if (!isValid) {
+            self.isShowCross = NO;
+            return;
+        }
         if (self.topScrollDelegate && [self.topScrollDelegate respondsToSelector:@selector(topScrollViewHiddenCross)]) {
             [self.topScrollDelegate topScrollViewHiddenCross];
         }
@@ -139,30 +162,45 @@
 }
 
 - (void)event_tapGesture:(UITapGestureRecognizer *)tap{
+    DXkLineModelConfig *config = [DXkLineModelConfig sharedInstance];
+    CGPoint tapPoint = [tap locationInView:self];
+    if (![self isValidEvent:tapPoint]) {
+        return;
+    }
     [self private_timerInvalidate];
+    //轻点 触发十字线
     if (self.isShowCross) {
-        NSLog(@"tap disapper");
+        self.isShowCross = !self.isShowCross;
+//        NSLog(@"tap disapper");
         if (self.topScrollDelegate && [self.topScrollDelegate respondsToSelector:@selector(topScrollViewHiddenCross)]) {
             [self.topScrollDelegate topScrollViewHiddenCross];
         }
-
+        
     }else{
-        CGPoint crossPoint = [tap locationInView:self];
-        NSInteger crossIndex = [self private_getRoundFromPoint:crossPoint];
-        NSLog(@"tap start");
-        if (self.topScrollDelegate && [self.topScrollDelegate respondsToSelector:@selector(topScrollView:tapIndex:YPosition:)]) {
-            [self.topScrollDelegate topScrollView:self tapIndex:crossIndex YPosition:crossPoint.y];
+        //轻点下面的画布
+        if (tapPoint.y > (config.painterHeight - config.painterBottomHeight)) {
+//            NSLog(@"点击了底部");
+            if (self.topScrollDelegate && [self.topScrollDelegate respondsToSelector:@selector(tapBottomPainter)]) {
+                [self.topScrollDelegate tapBottomPainter];
+            }
+        }else{
+            CGPoint crossPoint = [tap locationInView:self];
+            NSInteger crossIndex = [self private_getRoundFromPoint:crossPoint];
+//            NSLog(@"tap start");
+            if (self.topScrollDelegate && [self.topScrollDelegate respondsToSelector:@selector(topScrollView:tapIndex:YPosition:)]) {
+                [self.topScrollDelegate topScrollView:self tapIndex:crossIndex YPosition:crossPoint.y];
+            }
+            //开始计时
+            [[NSRunLoop currentRunLoop]addTimer:self.crossTimer forMode:NSDefaultRunLoopMode];
+            self.isShowCross = !self.isShowCross;
         }
-        //开始计时
-        [[NSRunLoop currentRunLoop]addTimer:self.crossTimer forMode:NSDefaultRunLoopMode];
         
     }
-    self.isShowCross = !self.isShowCross;
 }
 #pragma mark - 四舍五入 获得X坐标位置
 - (NSInteger)private_getRoundFromPoint:(CGPoint)crossPoint{
     
-    CGFloat countFloat =  crossPoint.x / self.minMoveWidth;
+    CGFloat countFloat =  (crossPoint.x - self.contentOffset.x) / self.minMoveWidth;
     NSInteger crossIndex;
     if(countFloat - (NSInteger)countFloat < 0.5){
         crossIndex = (NSInteger)countFloat;
@@ -171,6 +209,17 @@
     }
     crossIndex--;
     return crossIndex;
+}
+//手势位置是否合法
+- (BOOL)isValidEvent:(CGPoint)eventPoint{
+   DXkLineModelConfig *config = [DXkLineModelConfig sharedInstance];
+    BOOL isValid;
+    if (eventPoint.y > config.painterTopHeight && eventPoint.y < (config.painterHeight - config.painterBottomHeight)) {
+        isValid = NO;
+    }else{
+        isValid = YES;
+    }
+    return isValid;
 }
 
 - (void)private_timerInvalidate{
@@ -240,9 +289,12 @@
 
 - (NSTimer *)crossTimer{
     if (nil == _crossTimer) {
-        _crossTimer = [NSTimer timerWithTimeInterval:2.0 repeats:NO block:^(NSTimer * _Nonnull timer) {
+        _crossTimer = [NSTimer timerWithTimeInterval:_crossInterval repeats:NO block:^(NSTimer * _Nonnull timer) {
             
-            NSLog(@"自动消失");
+//            NSLog(@"自动消失");
+            if (self.topScrollDelegate && [self.topScrollDelegate respondsToSelector:@selector(topScrollViewHiddenCross)]) {
+                [self.topScrollDelegate topScrollViewHiddenCross];
+            }
             _crossTimer = nil;
             _isShowCross = NO;
         }];
