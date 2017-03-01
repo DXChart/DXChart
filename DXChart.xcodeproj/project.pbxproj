@@ -20,7 +20,7 @@
 		989835955011967CC2197EB96AD79F64 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F4A3389F0C0BF868834413E696F5C7 /* main.m */; };
 		A01EDA01F56940184E0B27359DFAD106 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 950BD404C5939633E1D4630A8615771D /* LaunchScreen.storyboard */; };
 		A67EB46B8D9749BF8C62DFD42F8F925D /* DXBasePainter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835B2702412D6620AB08D82EE5050A0 /* DXBasePainter.m */; };
-		BD296B801E65619900589ED1 /* DXQuotaPainter.m in Sources */ = {isa = PBXBuildFile; fileRef = BD296B7F1E65619900589ED1 /* DXQuotaPainter.m */; };
+		BD774293E5C5BF916E5A8080AD8F76BD /* DXQuotaPainter.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEC35A9D7CDE631872EF61402E243CE /* DXQuotaPainter.m */; };
 		BDBA62AE88E365F5A518E40ABD31C30C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CAC2323B3F2025D6CB5DD1B9C0EDA5C /* Main.storyboard */; };
 		C23B81395390E45BFE07A8EDCA3F4A00 /* DXkLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA59EE0901D9DDD193C30722696357E /* DXkLineModel.m */; };
 		C25B83A1A9DB06C403E3710E83A82768 /* DXDashLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 44FFEBBD1ABDC6A34F36E296D88D66EB /* DXDashLayer.m */; };
@@ -58,13 +58,13 @@
 		7835B2702412D6620AB08D82EE5050A0 /* DXBasePainter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXBasePainter.m; sourceTree = "<group>"; };
 		7B7970A3FE600C69F78FD6D2F45F63A9 /* DXkLineModelConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXkLineModelConfig.h; sourceTree = "<group>"; };
 		8C6EEBE02AB9A009501AF0A79ACBE97B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		8E7E6E9DCA0861CA046982948185D7F9 /* DXQuotaPainter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXQuotaPainter.h; sourceTree = "<group>"; };
 		97C4C14C288E7620A7A36B653411E44C /* DXBaseLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXBaseLayer.m; sourceTree = "<group>"; };
 		A19E6EBCBA9429EB8C9336BA60E7A736 /* DXDashLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXDashLayer.h; sourceTree = "<group>"; };
 		A3F7D3456B7AFE7F47D2970C375ABBAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A63E8BA7AF0610FB3DEC9F4BA2ABACA6 /* DXBorderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXBorderLayer.h; sourceTree = "<group>"; };
-		BD296B7E1E65619900589ED1 /* DXQuotaPainter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXQuotaPainter.h; sourceTree = "<group>"; };
-		BD296B7F1E65619900589ED1 /* DXQuotaPainter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXQuotaPainter.m; sourceTree = "<group>"; };
 		BE030D3EE78EEBF89E143386F0A5D684 /* YYModel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YYModel.framework; path = "../../../../Library/Developer/Xcode/DerivedData/DXChart-gputdzaoyyujnnfaezcheslspuug/Build/Products/Debug-iphonesimulator/YYModel/YYModel.framework"; sourceTree = "<group>"; };
+		CCEC35A9D7CDE631872EF61402E243CE /* DXQuotaPainter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXQuotaPainter.m; sourceTree = "<group>"; };
 		CF49A241099601097E92E8C1130FF242 /* DXTopScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXTopScrollView.h; sourceTree = "<group>"; };
 		D532E2E96A2C378D9B1C69BBAE6B2E11 /* DXKLinePainter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXKLinePainter.m; sourceTree = "<group>"; };
 		D7226C4551500BC29EC30D7868C0DF46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -173,8 +173,8 @@
 				7835B2702412D6620AB08D82EE5050A0 /* DXBasePainter.m */,
 				15A900D4333BCC436BED1039189EC346 /* DXKLinePainter.h */,
 				D532E2E96A2C378D9B1C69BBAE6B2E11 /* DXKLinePainter.m */,
-				BD296B7E1E65619900589ED1 /* DXQuotaPainter.h */,
-				BD296B7F1E65619900589ED1 /* DXQuotaPainter.m */,
+				8E7E6E9DCA0861CA046982948185D7F9 /* DXQuotaPainter.h */,
+				CCEC35A9D7CDE631872EF61402E243CE /* DXQuotaPainter.m */,
 			);
 			name = Painter;
 			sourceTree = "<group>";
@@ -339,12 +339,12 @@
 				EB9579AD725486A735E5FCD4C16B344B /* DXBaseLayer.m in Sources */,
 				A67EB46B8D9749BF8C62DFD42F8F925D /* DXBasePainter.m in Sources */,
 				7A21F9C1D3B939035CFB53654A533AC8 /* DXBorderLayer.m in Sources */,
-				BD296B801E65619900589ED1 /* DXQuotaPainter.m in Sources */,
 				C25B83A1A9DB06C403E3710E83A82768 /* DXDashLayer.m in Sources */,
 				0A478E1499900C15A9EF86A68A45D2B3 /* DXKLineLayer.m in Sources */,
 				C77A58872EFAF415CBFEBD604EB6E89F /* DXKLinePainter.m in Sources */,
 				EE20A35A884BE8B8AF1EF91D1F51B7D9 /* DXLineLayer.m in Sources */,
 				C83A64AD8C18C4F331E12C7C5D6399A3 /* DXMACDLayer.m in Sources */,
+				BD774293E5C5BF916E5A8080AD8F76BD /* DXQuotaPainter.m in Sources */,
 				0619083F2CCB9456C51E52DC46B90C59 /* DXTopScrollView.m in Sources */,
 				2D40F988389C054EC60FA2FF03A555FD /* DXVolumeLayer.m in Sources */,
 				C23B81395390E45BFE07A8EDCA3F4A00 /* DXkLineModel.m in Sources */,
