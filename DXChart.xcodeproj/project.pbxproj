@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
 		0619083F2CCB9456C51E52DC46B90C59 /* DXTopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD9D24766CF92574A62853E6533E162 /* DXTopScrollView.m */; };
 		0A478E1499900C15A9EF86A68A45D2B3 /* DXKLineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E23A250C1F41705F762AEB960B9502BC /* DXKLineLayer.m */; };
 		16DACB662D66F2F660098ED84361A02B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28F12188D30517B531D3B803F81A75E8 /* Assets.xcassets */; };
@@ -84,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+
 				7C77F8EA2D6415DF12F1D449CB4C96AE /* Pods_DXChart.framework in Frameworks */,
 				E10EED256284B14133064F997BEFB581 /* YYModel.framework in Frameworks */,
 			);
@@ -100,7 +102,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		164C6F0657DF1E84C6EC4B7BAD737F77 /* Frameworks */ = {
+		234C72081E65476A005E2C1A /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Tools;
+			sourceTree = "<group>";
+		};
+		236F0F671E5FFDA6004D0748 /* ScrollView */ = {
+
 			isa = PBXGroup;
 			children = (
 				D7A6B029D48209D9793750F33825D517 /* Pods_DXChart.framework */,
@@ -133,6 +143,7 @@
 		42F03D1D24294359D727587D4AF2C313 /* DXChart */ = {
 			isa = PBXGroup;
 			children = (
+
 				28336EA41CAC49348C56117619EA5590 /* Model */,
 				0F120097DA9F8ED195E5E62B67BB8DA0 /* Supporting Files */,
 				B800D0CBD85BF1CE4AD6D9FD8CDCFFCF /* View */,
@@ -257,7 +268,6 @@
 				TargetAttributes = {
 					9F39E3C1F0085FE330735C41FB0F8E35 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 2Y6HLW3C4U;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -508,6 +518,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+
 			};
 			name = Debug;
 		};

@@ -59,6 +59,7 @@
     config.painterWidth = self.view.frame.size.width - 2 *_margin;
 
     // 消除左边多余出来的 x - _width/2.
+
     CGRect paintRect = CGRectMake(_margin , 255, config.painterWidth, height + config.topMargin);
     DXKLinePainter *painter = [[DXKLinePainter alloc] initWithFrame:paintRect];
     _painter = painter;
@@ -70,6 +71,7 @@
     _quotaPainter = quotaPainter;
     [self.view addSubview:quotaPainter];
     
+
     
     DXTopScrollView *topScroll = [[DXTopScrollView alloc]initWithFrame:paintRect];
     topScroll.topScrollDelegate = self;

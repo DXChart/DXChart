@@ -18,10 +18,16 @@
  */
 - (void) topScrollView:(DXTopScrollView *)topScroll startIndex:(NSInteger)startIndex;
 
+- (void) topScrollView:(DXTopScrollView *)topScroll tapIndex:(NSInteger)tapIndex YPosition:(CGFloat)YPosition;
+
+- (void) topScrollViewHiddenCross;
+
 @end
 
 @interface DXTopScrollView : UIScrollView
 
 @property (nonatomic,weak) id<DXTopScrollViewDelegate> topScrollDelegate;
+
+@property (nonatomic,assign) NSTimeInterval crossInterval; //十字线消失时间 默认3秒
 
 @end
