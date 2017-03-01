@@ -69,9 +69,7 @@
 
 }
 - (void)private_setContentSize{
-    DXkLineModelConfig *modelConfig = [DXkLineModelConfig sharedInstance];
-    
-    CGFloat contentWidth = self.minMoveWidth * ([DXkLineModelArray sharedInstance].arrayCount - 1) + modelConfig.kLineWidth;
+    CGFloat contentWidth = self.minMoveWidth * [DXkLineModelArray sharedInstance].arrayCount;
     self.contentSize = CGSizeMake(contentWidth, [DXkLineModelConfig sharedInstance]. painterHeight);
 
 }
@@ -119,7 +117,7 @@
 - (void)event_crossGesture:(UILongPressGestureRecognizer *) crossGesture{
     CGPoint crossPoint = [crossGesture locationInView:self];
     BOOL isValid = [self isValidEvent:crossPoint];
-    NSInteger crossIndex = [self private_getRoundFromPoint:crossPoint];
+    NSInteger crossIndex = (NSInteger)((crossPoint.x - self.contentOffset.x) / self.minMoveWidth);
     
     [self private_timerInvalidate];
     self.isShowCross = YES;
@@ -185,8 +183,9 @@
             }
         }else{
             CGPoint crossPoint = [tap locationInView:self];
-            NSInteger crossIndex = [self private_getRoundFromPoint:crossPoint];
-//            NSLog(@"tap start");
+//            NSInteger crossIndex = [self private_getRoundFromPoint:crossPoint];
+            NSInteger crossIndex = (NSInteger)((crossPoint.x - self.contentOffset.x) / self.minMoveWidth);
+            NSLog(@"tap start  %ld",crossIndex);
             if (self.topScrollDelegate && [self.topScrollDelegate respondsToSelector:@selector(topScrollView:tapIndex:YPosition:)]) {
                 [self.topScrollDelegate topScrollView:self tapIndex:crossIndex YPosition:crossPoint.y];
             }
@@ -197,19 +196,7 @@
         
     }
 }
-#pragma mark - 四舍五入 获得X坐标位置
-- (NSInteger)private_getRoundFromPoint:(CGPoint)crossPoint{
-    
-    CGFloat countFloat =  (crossPoint.x - self.contentOffset.x) / self.minMoveWidth;
-    NSInteger crossIndex;
-    if(countFloat - (NSInteger)countFloat < 0.5){
-        crossIndex = (NSInteger)countFloat;
-    }else{
-        crossIndex = (NSInteger)countFloat + 1;
-    }
-    crossIndex--;
-    return crossIndex;
-}
+
 //手势位置是否合法
 - (BOOL)isValidEvent:(CGPoint)eventPoint{
    DXkLineModelConfig *config = [DXkLineModelConfig sharedInstance];
@@ -245,9 +232,10 @@
     if (self.isPinch) {
         [self private_handlePich];
     }else{
-        
-        NSInteger startIndex = (NSInteger)(self.contentOffset.x / self.minMoveWidth) - 1;
-        startIndex < 0 ? startIndex = 0 : startIndex;
+        //如果超出,则从下一个角标开始计算
+        CGFloat countF = self.contentOffset.x / self.minMoveWidth;
+        NSInteger startIndex = (NSInteger)(self.contentOffset.x / self.minMoveWidth);
+        (countF - startIndex) > 0 ? startIndex++ : startIndex ;
         
         NSInteger lastIndex = startIndex + self.showCount;
         //同样的数据 不需要调用代理
@@ -277,9 +265,9 @@
     
     NSInteger count = (NSInteger)(self.frame.size.width / minWidth);
     
-    if (!((self.frame.size.width - count * minWidth) < [DXkLineModelConfig sharedInstance].kLineWidth)) {
-        count++;
-    }
+//    if (!((self.frame.size.width - count * minWidth) < [DXkLineModelConfig sharedInstance].kLineWidth)) {
+//        count++;
+//    }
     return count;
 }
 
