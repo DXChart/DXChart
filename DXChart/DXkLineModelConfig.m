@@ -43,7 +43,7 @@
     });
     return config;
 }
-
+#pragma mark - Private Methods
 
 -(UIColor *)getBgColorWithLineType:(DXLineType)lineType{
     switch (lineType) {
@@ -68,6 +68,22 @@
             
     }
 }
+
+- (CGFloat)getXPositionWithIndex:(NSInteger)index{
+    
+    return index *(_kLineWidth + _layerToLayerGap) + _kLineWidth / 2.;
+    
+}
+
+- (CGFloat)getPriceWithYPosition:(CGFloat)y{
+    if (y<= _painterTopHeight) {
+        return y/_painterTopHeight * (self.highest - self.lowest) + self.lowest;
+    }else{
+        // 需要根据类型来进行判定
+        return (y - _painterBottomToTop) * self.maxVolume;
+    }
+}
+
 
 #pragma mark - Getter & Setter
 

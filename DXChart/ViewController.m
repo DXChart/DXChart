@@ -16,6 +16,7 @@
 #import "DXKLinePainter.h"
 #import <mach/mach_time.h>
 #import "DXQuotaPainter.h"
+#import "DXCrossLinePainter.h"
 
 @interface ViewController ()<DXTopScrollViewDelegate>
 
@@ -23,6 +24,7 @@
 
 @property (nonatomic, strong) DXKLinePainter *painter;
 @property (nonatomic, strong) DXQuotaPainter *quotaPainter;
+@property (nonatomic, strong) DXCrossLinePainter *crossLinePainter;
 
 @end
 
@@ -71,8 +73,10 @@
     _quotaPainter = quotaPainter;
     [self.view addSubview:quotaPainter];
     
-
-    
+    DXCrossLinePainter *crossLinePainter = [[DXCrossLinePainter alloc] initWithFrame:paintRect];
+    _crossLinePainter = crossLinePainter;
+    [self.view addSubview:crossLinePainter];
+        
     DXTopScrollView *topScroll = [[DXTopScrollView alloc]initWithFrame:paintRect];
     topScroll.topScrollDelegate = self;
     [self.view addSubview:topScroll];
@@ -92,15 +96,26 @@
     // time consuming 0.01~0.05 ms ,可以无视
     CGFloat maxVolume = [models calculateMaxVolumeIndexWithRange:range];
     config.maxVolume = maxVolume;
-    // get max high min low
     maxAndHigh max = [models calculateMaxHightMinLowWithRange:range];
     config.maxHigh = max.maxHigh;
     config.minLow = max.minLow;
     maxAndHigh maxMACD = [models calculateMaxAndMinMACDWithRange:range];
     config.macdHighest = maxMACD.maxHigh;
     config.macdLowest = maxMACD.minLow;
+    
     [_quotaPainter reloadWithModels:[[DXkLineModelArray sharedInstance].chartlist  subarrayWithRange:NSMakeRange(startIndex, visableCount)]];
     [_painter reloadWithModels:[[DXkLineModelArray sharedInstance].chartlist  subarrayWithRange:NSMakeRange(startIndex, visableCount)]];
+    
+}
+
+- (void)topScrollView:(DXTopScrollView *)topScroll tapIndex:(NSInteger)tapIndex YPosition:(CGFloat)YPosition{
+    
+    [_crossLinePainter moveToIndex:tapIndex y:YPosition];
+    
+}
+
+- (void)topScrollViewHiddenCross{
+    [_crossLinePainter hiddenCrossLine];
     
 }
 

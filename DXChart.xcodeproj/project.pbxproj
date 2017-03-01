@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-
 		0619083F2CCB9456C51E52DC46B90C59 /* DXTopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD9D24766CF92574A62853E6533E162 /* DXTopScrollView.m */; };
 		0A478E1499900C15A9EF86A68A45D2B3 /* DXKLineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E23A250C1F41705F762AEB960B9502BC /* DXKLineLayer.m */; };
 		16DACB662D66F2F660098ED84361A02B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28F12188D30517B531D3B803F81A75E8 /* Assets.xcassets */; };
@@ -21,6 +20,7 @@
 		989835955011967CC2197EB96AD79F64 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F4A3389F0C0BF868834413E696F5C7 /* main.m */; };
 		A01EDA01F56940184E0B27359DFAD106 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 950BD404C5939633E1D4630A8615771D /* LaunchScreen.storyboard */; };
 		A67EB46B8D9749BF8C62DFD42F8F925D /* DXBasePainter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7835B2702412D6620AB08D82EE5050A0 /* DXBasePainter.m */; };
+		BD296B831E66612300589ED1 /* DXCrossLinePainter.m in Sources */ = {isa = PBXBuildFile; fileRef = BD296B821E66612300589ED1 /* DXCrossLinePainter.m */; };
 		BD774293E5C5BF916E5A8080AD8F76BD /* DXQuotaPainter.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEC35A9D7CDE631872EF61402E243CE /* DXQuotaPainter.m */; };
 		BDBA62AE88E365F5A518E40ABD31C30C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CAC2323B3F2025D6CB5DD1B9C0EDA5C /* Main.storyboard */; };
 		C23B81395390E45BFE07A8EDCA3F4A00 /* DXkLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA59EE0901D9DDD193C30722696357E /* DXkLineModel.m */; };
@@ -58,13 +58,14 @@
 		739595D670B3018507A2667363356990 /* DXBorderLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXBorderLayer.m; sourceTree = "<group>"; };
 		7835B2702412D6620AB08D82EE5050A0 /* DXBasePainter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXBasePainter.m; sourceTree = "<group>"; };
 		7B7970A3FE600C69F78FD6D2F45F63A9 /* DXkLineModelConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXkLineModelConfig.h; sourceTree = "<group>"; };
-		813E68382A01D196F9095E57AA751426 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8C6EEBE02AB9A009501AF0A79ACBE97B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8E7E6E9DCA0861CA046982948185D7F9 /* DXQuotaPainter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXQuotaPainter.h; sourceTree = "<group>"; };
 		97C4C14C288E7620A7A36B653411E44C /* DXBaseLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXBaseLayer.m; sourceTree = "<group>"; };
 		A19E6EBCBA9429EB8C9336BA60E7A736 /* DXDashLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXDashLayer.h; sourceTree = "<group>"; };
 		A3F7D3456B7AFE7F47D2970C375ABBAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A63E8BA7AF0610FB3DEC9F4BA2ABACA6 /* DXBorderLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXBorderLayer.h; sourceTree = "<group>"; };
+		BD296B811E66612300589ED1 /* DXCrossLinePainter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXCrossLinePainter.h; sourceTree = "<group>"; };
+		BD296B821E66612300589ED1 /* DXCrossLinePainter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXCrossLinePainter.m; sourceTree = "<group>"; };
 		BE030D3EE78EEBF89E143386F0A5D684 /* YYModel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = YYModel.framework; path = "../../../../Library/Developer/Xcode/DerivedData/DXChart-gputdzaoyyujnnfaezcheslspuug/Build/Products/Debug-iphonesimulator/YYModel/YYModel.framework"; sourceTree = "<group>"; };
 		CCEC35A9D7CDE631872EF61402E243CE /* DXQuotaPainter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DXQuotaPainter.m; sourceTree = "<group>"; };
 		CF49A241099601097E92E8C1130FF242 /* DXTopScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DXTopScrollView.h; sourceTree = "<group>"; };
@@ -85,7 +86,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
 				7C77F8EA2D6415DF12F1D449CB4C96AE /* Pods_DXChart.framework in Frameworks */,
 				E10EED256284B14133064F997BEFB581 /* YYModel.framework in Frameworks */,
 			);
@@ -100,24 +100,6 @@
 				E6F4A3389F0C0BF868834413E696F5C7 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		234C72081E65476A005E2C1A /* Tools */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Tools;
-			sourceTree = "<group>";
-		};
-		236F0F671E5FFDA6004D0748 /* ScrollView */ = {
-
-			isa = PBXGroup;
-			children = (
-				D7A6B029D48209D9793750F33825D517 /* Pods_DXChart.framework */,
-				813E68382A01D196F9095E57AA751426 /* UIKit.framework */,
-				BE030D3EE78EEBF89E143386F0A5D684 /* YYModel.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		28336EA41CAC49348C56117619EA5590 /* Model */ = {
@@ -143,7 +125,6 @@
 		42F03D1D24294359D727587D4AF2C313 /* DXChart */ = {
 			isa = PBXGroup;
 			children = (
-
 				28336EA41CAC49348C56117619EA5590 /* Model */,
 				0F120097DA9F8ED195E5E62B67BB8DA0 /* Supporting Files */,
 				B800D0CBD85BF1CE4AD6D9FD8CDCFFCF /* View */,
@@ -197,6 +178,8 @@
 				D532E2E96A2C378D9B1C69BBAE6B2E11 /* DXKLinePainter.m */,
 				8E7E6E9DCA0861CA046982948185D7F9 /* DXQuotaPainter.h */,
 				CCEC35A9D7CDE631872EF61402E243CE /* DXQuotaPainter.m */,
+				BD296B811E66612300589ED1 /* DXCrossLinePainter.h */,
+				BD296B821E66612300589ED1 /* DXCrossLinePainter.m */,
 			);
 			name = Painter;
 			sourceTree = "<group>";
@@ -205,7 +188,6 @@
 			isa = PBXGroup;
 			children = (
 				42F03D1D24294359D727587D4AF2C313 /* DXChart */,
-				164C6F0657DF1E84C6EC4B7BAD737F77 /* Frameworks */,
 				3F5F0409A9BC86413A5B21D35718FA52 /* Pods */,
 				B7EC9B789E02ABD5BD4679792CABD1A3 /* Products */,
 			);
@@ -268,6 +250,7 @@
 				TargetAttributes = {
 					9F39E3C1F0085FE330735C41FB0F8E35 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 2Y6HLW3C4U;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -358,6 +341,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD296B831E66612300589ED1 /* DXCrossLinePainter.m in Sources */,
 				8CCE5459F0E820C11BDD34A8E394EF70 /* AppDelegate.m in Sources */,
 				EB9579AD725486A735E5FCD4C16B344B /* DXBaseLayer.m in Sources */,
 				A67EB46B8D9749BF8C62DFD42F8F925D /* DXBasePainter.m in Sources */,
@@ -518,7 +502,6 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-
 			};
 			name = Debug;
 		};

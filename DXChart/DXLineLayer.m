@@ -20,6 +20,12 @@
 
 @implementation DXLineLayer
 
++ (instancetype)layer{
+    DXLineLayer *layer1 = [super layer];
+    layer1.strokePath = [UIBezierPath bezierPath];
+    return layer1;
+}
+
 + (instancetype)layerWithStartPoint:(CGPoint)point endPoint:(CGPoint)endPoint{
     DXLineLayer *layer = [DXLineLayer layer];
     UIBezierPath *path = [UIBezierPath bezierPath];
@@ -39,7 +45,6 @@
     UIColor *bgColor = [config getBgColorWithLineType:lineType];
     layer.fillColor = [UIColor clearColor].CGColor;
     layer.strokeColor = bgColor.CGColor;
-    layer.strokePath = [UIBezierPath bezierPath];
     layer.config = config;
     layer.lineType = lineType;
     return layer;

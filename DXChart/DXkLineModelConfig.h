@@ -57,5 +57,8 @@
 + (instancetype)sharedInstance;
 
 - (UIColor *)getBgColorWithLineType:(DXLineType)lineType;
+- (CGFloat)getXPositionWithIndex:(NSInteger)index;
+- (CGFloat)getPriceWithYPosition:(CGFloat)y;
+- (NSString *)getDateWithIndex:(NSInteger)index;
 
 @end
